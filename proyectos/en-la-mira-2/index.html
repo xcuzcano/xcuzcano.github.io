@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>En la mira 2: Amenazas digitales en América Latina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F5F5; --paper-2:#EFEFEF; --ink:#42382C; --ink-soft:#5C5145; --muted:#6E6E6E;
+    --line:#E3E3E3; --line-strong:#CCCCCC;
+    --mark:#06605C; --hover:#4CFCCA; --off:#DCDCDC;
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Public Sans",system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  header{border-bottom:1px solid var(--line);padding:52px 0 30px}
+  .eyebrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:22px;
+    font-family:"Space Grotesk","Public Sans",sans-serif;font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600}
+  .eyebrow .org{color:var(--mark)}
+  .eyebrow .sep{width:24px;height:1px;background:var(--line-strong)}
+  .eyebrow .per{color:var(--ink-soft)}
+  h1{font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:clamp(32px,4.6vw,56px);line-height:.99;letter-spacing:-.025em;max-width:17ch;margin-bottom:18px}
+  .standfirst{font-size:17px;color:var(--ink-soft);max-width:64ch}
+
+  .disclose{margin-top:12px}
+  .disclose-btn{
+    font-family:inherit;font-size:14px;font-weight:500;color:var(--mark);
+    background:none;border:none;cursor:pointer;padding:4px 0;
+    display:inline-flex;align-items:center;gap:7px;border-bottom:1px solid transparent;
+  }
+  .disclose-btn:hover{border-bottom-color:var(--mark)}
+  .disclose-btn:focus-visible{outline:2px solid var(--mark);outline-offset:3px}
+  .disclose-btn .car{transition:transform .18s;display:inline-block;font-size:11px}
+  .disclose-btn[aria-expanded="true"] .car{transform:rotate(90deg)}
+  .disclose-panel{
+    max-height:0;overflow:hidden;transition:max-height .28s ease;
+  }
+  .disclose-panel.open{max-height:280px}
+  .disclose-inner{border-left:3px solid var(--mark);padding:4px 0 4px 16px;margin-top:12px;max-width:70ch}
+  .disclose-inner p{font-size:14.5px;color:var(--ink-soft)}
+  .disclose-inner strong{font-weight:600;color:var(--ink)}
+
+  .controls{padding:24px 0 12px}
+  .toprow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+  .counter{font-size:12.5px;color:var(--muted);font-weight:500}
+  .fgroup{margin-bottom:12px}
+  .flabel{font-family:"Space Grotesk","Public Sans",sans-serif;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:9px;font-weight:600}
+  .filters{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-family:inherit;font-size:13px;line-height:1;padding:8px 13px;border-radius:100px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-soft);cursor:pointer;transition:.14s;display:inline-flex;align-items:center;gap:7px}
+  .chip:hover{border-color:var(--ink)}
+  .chip:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
+  .chip .sw{width:9px;height:9px;border-radius:50%;background:currentColor}
+  .chip[aria-pressed="true"]{border-color:transparent;font-weight:600}
+
+  .stage{display:grid;grid-template-columns:minmax(400px,570px) minmax(320px,1fr);gap:30px;padding:6px 0 38px;align-items:start}
+  .mapstatus{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    padding:11px 16px;background:#fff;border:1px solid var(--line);border-bottom:none;
+    border-radius:10px 10px 0 0;
+  }
+  .mapstatus .now{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:var(--ink)}
+  .mapstatus .now i{width:11px;height:11px;border-radius:50%;flex:0 0 auto}
+  .mapstatus .now em{font-style:normal;font-weight:400;color:var(--muted);font-size:12.5px}
+  .clearf{
+    font-family:inherit;font-size:12.5px;font-weight:500;color:var(--ink-soft);
+    background:none;border:1px solid var(--line-strong);border-radius:100px;
+    padding:6px 13px;cursor:pointer;display:none;align-items:center;gap:7px;
+  }
+  .clearf:hover{border-color:var(--ink);color:var(--ink)}
+  .clearf.on{display:inline-flex}
+  .mapbox{position:relative;background:#FFFFFF;border:1px solid var(--line);border-bottom:none;overflow:hidden}
+  #map{display:block;width:100%;height:auto}
+  .loading{font-family:"Space Grotesk","Public Sans",sans-serif;position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;min-height:420px}
+  .country{stroke:#FFFFFF;stroke-width:.5;cursor:pointer;transition:fill .2s,stroke .2s}
+  .country:focus{outline:none}
+  .country.dim{stroke:#BDBDBD;stroke-width:.9}
+  .country.inert{pointer-events:none;cursor:default;stroke:#FFFFFF;stroke-width:.5}
+  .country.soft{opacity:.42}
+  .country.is-active{stroke:#42382C;stroke-width:1.6}
+  .country:hover{fill:var(--hover)!important;stroke:var(--ink);stroke-width:1.1}
+  .country.inert:hover{fill:var(--off)!important;stroke:#FFFFFF;stroke-width:.5}
+
+  .maplegend{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px 16px;background:#FFFFFF;border:1px solid var(--line);border-top:1px solid var(--line);border-radius:0 0 10px 10px}
+  .lg{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-soft)}
+  .lg i{width:12px;height:12px;border-radius:3px;display:block;flex:0 0 auto;border:1px solid rgba(0,0,0,.06)}
+  .lg.hatch i{background:var(--paper-2);position:relative;overflow:hidden}
+  .lg.hatch i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 2px,var(--line-strong) 2px 3px)}
+
+  .panel{position:sticky;top:20px;border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden}
+  .panel-head{padding:19px 22px 15px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .panel-head .kicker{font-family:"Space Grotesk","Public Sans",sans-serif;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:600}
+  .panel-head h2{font-family:"Public Sans",sans-serif;font-weight:700;font-size:27px;line-height:1.08;letter-spacing:-.02em}
+  .clearbtn{font-family:inherit;font-size:12px;color:var(--muted);background:none;border:1px solid var(--line-strong);border-radius:100px;padding:5px 11px;cursor:pointer;white-space:nowrap;display:none}
+  .clearbtn:hover{border-color:var(--ink);color:var(--ink)}
+  .clearbtn.on{display:block}
+  .panel-body{padding:15px 22px 8px;max-height:54vh;overflow-y:auto}
+  .hint{font-size:14px;color:var(--muted)}
+  .plist{display:flex;flex-direction:column}
+  .grow{border-top:1px solid var(--line);padding:11px 0}
+  .grow:first-child{border-top:none;padding-top:2px}
+  .gname{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--ink)}
+  .gname i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+  .gdef{font-size:13px;color:var(--muted);line-height:1.45;margin-top:3px;padding-left:19px}
+  .prow{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font-family:inherit;
+    font-size:14px;color:var(--ink);background:none;border:none;border-top:1px solid var(--line);
+    padding:11px 0;cursor:pointer}
+  .prow:first-child{border-top:none}
+  .prow i{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+  .prow .n{margin-left:auto;font-family:"Space Grotesk","Public Sans",sans-serif;font-size:12.5px;color:var(--muted)}
+  .prow:hover{color:var(--mark)}
+  .prow:hover .n{color:var(--mark)}
+  .prow.sel{font-weight:600}
+  .backl{font-family:inherit;background:none;border:none;color:var(--mark);font-size:13px;font-weight:500;
+    cursor:pointer;padding:0 0 12px;display:inline-flex;gap:6px;align-items:center}
+  .backl:hover{text-decoration:underline}
+  .pnote{font-size:13.5px;color:var(--muted);padding-bottom:12px}
+  .pnote-top{padding:0 0 13px;margin-bottom:2px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:7px}
+  .pnote-top::before{content:"↖";font-size:15px;color:var(--mark)}
+  .rec{border-top:1px solid var(--line);padding:12px 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:11px}
+  .rec:first-child{border-top:none;padding-top:2px}
+  .rec .bar{width:3px;border-radius:2px}
+  .rec .tag{font-family:"Space Grotesk","Public Sans",sans-serif;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;margin-bottom:4px;display:block;font-weight:600}
+  .rec p{font-size:14px;line-height:1.5}
+  .note{background:var(--paper-2);border-radius:6px;padding:14px 15px;font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin-bottom:14px}
+  .note strong{color:var(--ink);font-weight:600}
+  .note button{font-family:inherit;font-size:13.5px;background:none;border:none;color:var(--mark);cursor:pointer;padding:0}
+  .note .why{font-weight:600;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+  .note .why:hover{text-decoration:underline}
+  .note .why .car{font-size:10px;display:inline-block;transition:transform .18s}
+  .note .why[aria-expanded="true"] .car{transform:rotate(90deg)}
+  .note .whytxt{margin-top:11px;padding-top:11px;border-top:1px solid var(--line)}
+  .seeall{font-family:inherit;display:inline-block;margin-top:13px;background:none;border:1px solid var(--mark);color:var(--mark);border-radius:100px;padding:6px 13px;font-size:13px;font-weight:500;cursor:pointer}
+  .seeall:hover{background:var(--mark);color:#fff}
+  .note .seeall{border:1px solid var(--mark);padding:6px 13px}
+  .panel-foot{border-top:1px solid var(--line);padding:13px 22px 15px}
+  .more{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;color:var(--mark);text-decoration:none;border-bottom:1px solid var(--line-strong);padding-bottom:2px;font-weight:500}
+  .more:hover{border-color:var(--mark)}
+
+  .tip{position:fixed;pointer-events:none;z-index:50;background:var(--ink);color:var(--paper);font-size:12.5px;padding:6px 10px;border-radius:5px;opacity:0;transition:opacity .12s;white-space:nowrap;font-weight:500}
+  .tip.on{opacity:1}
+  .tip span{opacity:.6;font-size:11px;margin-left:6px;font-weight:400}
+
+  .cta{border-top:1px solid var(--line);padding:30px 0 64px}
+  .cta-inner{display:flex;gap:26px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  .cta h3{font-family:"Public Sans",sans-serif;font-weight:700;font-size:25px;line-height:1.12;letter-spacing:-.02em;max-width:22ch}
+  .cta p{font-size:14.5px;color:var(--ink-soft);max-width:50ch;margin-top:8px}
+  .btn{display:inline-flex;align-items:center;gap:9px;background:var(--mark);color:var(--paper);text-decoration:none;font-size:14.5px;font-weight:500;padding:13px 22px;border-radius:100px;white-space:nowrap}
+  .btn:hover{background:#00A488}
+
+  @media (max-width:900px){.stage{grid-template-columns:minmax(0,1fr)}.panel{position:static}.panel-body{max-height:none}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow"><span class="org">OLAD · Derechos Digitales</span><span class="sep"></span><span class="per">Junio 2024 – Mayo 2025</span></div>
+    <h1>En la mira 2:<br>Un panorama de las amenazas digitales en América Latina</h1>
+    <p class="standfirst">Incidentes documentados en 19 países, desde una perspectiva de derechos humanos e interés público.</p>
+    <div class="disclose">
+      <button class="disclose-btn" id="dbtn" aria-expanded="false" aria-controls="dpanel">
+        <span class="car">▸</span> Cómo leer este mapa
+      </button>
+      <div class="disclose-panel" id="dpanel">
+        <div class="disclose-inner">
+          <p><strong>Esto no es un ranking.</strong> Que un país registre más o menos casos, o ninguno, no significa que su situación sea mejor o peor. La presencia de incidentes documentados puede responder a factores como la capacidad de monitoreo de las organizaciones locales, una cobertura mediática desigual entre países o la decisión de no difundir casos para proteger a las personas afectadas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stage">
+    <div>
+      <div class="mapstatus">
+        <span class="now" id="now"><i style="background:#06605C"></i>Todos los incidentes</span>
+        <button class="clearf" id="clearf">✕ Limpiar filtro</button>
+      </div>
+      <div class="mapbox">
+        <div class="loading" id="loading">Cargando mapa…</div>
+        <svg id="map" role="img" aria-labelledby="mt md"></svg>
+        <span id="mt" class="sr">Mapa de América Latina y el Caribe</span>
+        <span id="md" class="sr">Los países con incidentes documentados aparecen marcados. Los territorios en gris quedan fuera del alcance de este informe.</span>
+      </div>
+      <div class="maplegend" id="legend"></div>
+    </div>
+
+    <aside class="panel" aria-live="polite">
+      <div class="panel-head">
+        <div>
+          <p class="kicker" id="pk">Selecciona un país</p>
+          <h2 id="pt">América Latina</h2>
+        </div>
+        <button class="clearbtn" id="clear">Ver toda la región</button>
+      </div>
+      <div class="panel-body" id="pb">
+        <p class="hint">Haz clic en cualquier país del mapa para ver los incidentes documentados durante el período analizado.</p>
+      </div>
+      <div class="panel-foot"><a class="more" href="https://www.derechosdigitales.org/recursos/en-la-mira-2/" id="ml">Leer el caso completo en el informe →</a></div>
+    </aside>
+  </div>
+</div>
+
+<section class="cta">
+  <div class="wrap cta-inner">
+    <div>
+      <h3>Cada caso tiene un contexto</h3>
+      <p>El informe completo documenta cada incidente con sus fuentes y todo lo que este mapa resume.</p>
+    </div>
+    <a class="btn" href="https://www.derechosdigitales.org/recursos/en-la-mira-2/">Descargar En la mira 2 →</a>
+  </div>
+</section>
+
+<div class="tip" id="tip"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+const T={
+ normativa:{l:"Normativa",c:"#7C8B94"},
+ censura:{l:"Censura",c:"#FF5948"},
+ filtraciones:{l:"Filtraciones de datos",c:"#D98E1F"},
+ desinformacion:{l:"Desinformación en elecciones",c:"#5B7FA8"},
+ ataques:{l:"Ataques dirigidos",c:"#7FA82E"},
+ vgft:{l:"Violencia de género facilitada por las tecnologías",c:"#8B5B76"},
+ biometricos:{l:"Explotación de datos biométricos",c:"#00A488"},
+ cortes:{l:"Cortes de internet",c:"#1F6E8C"},
+ vigilancia:{l:"Vigilancia",c:"#42382C"}
+};
+const MARK="#06605C", OFF="#DCDCDC";
+
+const N={
+"484":"México","320":"Guatemala","084":"Belice","340":"Honduras","222":"El Salvador","558":"Nicaragua",
+"188":"Costa Rica","591":"Panamá","192":"Cuba","214":"República Dominicana","332":"Haití","388":"Jamaica",
+"630":"Puerto Rico","780":"Trinidad y Tobago","044":"Bahamas","052":"Barbados","308":"Granada",
+"662":"Santa Lucía","212":"Dominica","028":"Antigua y Barbuda","670":"San Vicente y las Granadinas",
+"531":"Curazao","533":"Aruba","170":"Colombia","862":"Venezuela","328":"Guyana","740":"Surinam",
+"218":"Ecuador","604":"Perú","076":"Brasil","068":"Bolivia","600":"Paraguay","152":"Chile",
+"032":"Argentina","858":"Uruguay"
+};
+
+const D={
+"032":[
+ ["normativa","La Resolución 428/2024 habilitó el monitoreo sistemático de fuentes abiertas con tecnologías automatizadas."],
+ ["normativa","El Decreto 383/2025 incorporó el ciberpatrullaje como facultad de la Policía Federal, sin autorización judicial."],
+ ["normativa","Una reforma amplió las causales de reserva en el régimen de acceso a la información pública."],
+ ["filtraciones","El hackeo a un proveedor de mensajería SMS permitió interceptar códigos de verificación en tiempo real."],
+ ["filtraciones","Se pusieron a la venta más de 665 mil estudios médicos de pacientes."],
+ ["filtraciones","Se ofrecieron bases con millones de registros personales, con muestras para verificar su autenticidad."],
+ ["ataques","Un ransomware afectó a la empresa que distribuye tarjetas de crédito y documentación oficial."],
+ ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas, con picos de 9.500 registros diarios."],
+ ["vigilancia","Una nueva unidad estatal habilita reconocimiento facial, drones y algoritmos para predecir delitos."],
+ ["vigilancia","El ciberpatrullaje fue reinstaurado en 2024, tras haber sido derogado en 2022."]
+],
+"068":[
+ ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
+ ["ataques","Cientos de ataques contra páginas estatales, incluido un defacement a la Cámara de Senadores."],
+ ["vgft","Una línea de ayuda registró 377 casos de violencia digital durante el período."],
+ ["vgft","Ataques con deepfakes contra mujeres en política, con insinuaciones sexuales para erosionar su legitimidad."]
+],
+"076":[
+ ["censura","El Supremo Tribunal ordenó la suspensión total de X, con sanciones a quienes la evadieran por VPN."],
+ ["filtraciones","Ataques a instituciones educativas públicas expusieron datos de miles de estudiantes menores de edad."],
+ ["filtraciones","Venta de más de 250 mil registros bancarios en foros clandestinos."],
+ ["desinformacion","Al menos cinco candidatas fueron atacadas con deepfakes sexuales durante la campaña."],
+ ["desinformacion","El 17% de los enlaces compartidos por grupos de extrema derecha en WhatsApp contenía desinformación."],
+ ["ataques","Una organización criminal habilitó más de 180 chips con datos de terceros para vaciar cuentas bancarias."],
+ ["ataques","Instituciones del Estado sufrieron ciberataques simultáneos el mismo día del bloqueo de X."],
+ ["vgft","TikTok expone progresivamente a adolescentes varones a narrativas que degradan a las mujeres."],
+ ["vgft","Una campaña masiva de publicidad antiaborto en Meta combina segmentación y agenda ultraconservadora."],
+ ["biometricos","La autoridad de protección de datos ordenó a World suspender la compensación en criptomonedas."],
+ ["vigilancia","São Paulo instaló 40.000 cámaras con reconocimiento facial. Más del 8% de los arrestos fueron errores."],
+ ["vigilancia","Cerca de 400 de esas cámaras se instalaron en escuelas, registrando rostros de estudiantes."],
+ ["vigilancia","17 puntos de reconocimiento facial en Copacabana durante la celebración de Año Nuevo."],
+ ["vigilancia","Cámaras, drones y 18 puntos de control en el concierto de Lady Gaga, con 2,5 millones de asistentes."],
+ ["vigilancia","El gobierno licitó servicios de perfilamiento en redes con análisis de emociones mediante IA."]
+],
+"152":[
+ ["normativa","Nuevas leyes de protección de datos y ciberseguridad conviven con normas que autorizan interceptar comunicaciones."],
+ ["filtraciones","Un ransomware contra una universidad derivó en la publicación de 46 GB con datos de estudiantes y personal."],
+ ["desinformacion","El desfase de actualización del sitio del Servel fue reinterpretado como señal de manipulación."],
+ ["ataques","Mensajes sobre puntos por vencer de un programa de fidelización dirigían a un sitio clonado."],
+ ["vgft","Un estudiante fue acusado de crear deepfakes sexuales de sus compañeras."],
+ ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
+ ["biometricos","La Corte Suprema ordenó eliminar el World ID de un adolescente escaneado sin consentimiento válido."],
+ ["cortes","Un fallo eléctrico dejó sin internet ni telefonía a 14 de 16 regiones por más de 12 horas."]
+],
+"170":[
+ ["normativa","Un proyecto de ley propone una agencia con facultades para ordenar el cese de operaciones en el ciberespacio."],
+ ["censura","Coljuegos ordenó a los proveedores bloquear Reddit mediante restricciones por DNS."],
+ ["filtraciones","La app de pagos GoPass dejó abierto un contenedor en la nube con datos de casi un millón de personas."],
+ ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
+ ["ataques","Troyanos de administración remota se distribuyeron por correos que suplantaban bancos y mensajería."],
+ ["ataques","Aplicaciones de préstamos operan con permisos intrusivos y prácticas de extorsión."],
+ ["ataques","Campañas de phishing suplantaron a la DIAN con falsos avisos de deuda."],
+ ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
+ ["cortes","Una tormenta torrencial cortó el suministro eléctrico en Chocó y dejó sin internet entre 6 y 12 horas."],
+ ["cortes","Una segunda caída en Chocó dejó sin conectividad entre 3 y 6 horas, donde solo el 13% tiene acceso."],
+ ["vigilancia","Estados Unidos financió el uso de Pegasus en el país con 11 millones de dólares."],
+ ["vigilancia","Se elaboró un listado de 486 usuarios de X clasificados según su posición frente al gobierno."]
+],
+"188":[
+ ["filtraciones","Una mala configuración en Movistar dejó accesibles 650 mil documentos de identidad y selfies de verificación."],
+ ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
+ ["ataques","Un fallo obligó a una operadora a indemnizar a una víctima de SIM swapping por no verificar identidades."],
+ ["ataques","El acceso no autorizado a un correo universitario permitió enviar una amenaza de bomba y evacuar el campus."]
+],
+"192":[
+ ["normativa","La Ley de Comunicación Social estableció un régimen integral de control sobre contenidos y medios digitales."],
+ ["censura","El Estado analiza el tráfico en tiempo real para bloquear apps de mensajería cifrada como Signal."],
+ ["censura","Apagones deliberados de ETECSA durante movilizaciones sociales, junto con alzas de tarifas."],
+ ["censura","Condenas de cárcel por publicaciones en redes y renuncia forzada de al menos nueve periodistas."],
+ ["cortes","Tres colapsos del sistema eléctrico por fallas técnicas dejaron sin luz ni internet a millones de personas."],
+ ["cortes","El huracán Rafael provocó una nueva caída del sistema eléctrico y de la conectividad."],
+ ["cortes","El país ocupó el último lugar mundial en velocidad de descarga, con 2,96 Mbps de promedio."],
+ ["cortes","La dolarización parcial de ETECSA volvió la conectividad un privilegio para quienes tienen divisas."]
+],
+"214":[
+ ["censura","Una empresa extranjera amenazó con suspender el alojamiento web de un diario si no borraba un reportaje."],
+ ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
+ ["ataques","Fueron vulneradas las cuentas de X del presidente, ministros y el presidente del Senado."],
+ ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
+ ["biometricos","Pro Consumidor ordenó el cese de operaciones por cláusulas abusivas y falta de domicilio local."]
+],
+"218":[
+ ["normativa","Una nueva Ley de Inteligencia habilita interceptar comunicaciones sin orden judicial."],
+ ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
+ ["filtraciones","Datos del servicio de emergencias ECU 911 llegaron a funerarias, que contactaban a familiares anticipadamente."],
+ ["desinformacion","Circuló un video que afirmaba que la autoridad electoral entregaba bolígrafos con trazo borrable."],
+ ["desinformacion","Una imagen falsa atribuía a la OEA la declaración de que los resultados no eran legales."],
+ ["desinformacion","Piezas fabricadas replicaron logos de medios e instituciones para proyectar legitimidad."],
+ ["desinformacion","Empresas registradas en EEUU habrían usado productos de Google para pautar anuncios desinformativos."],
+ ["ataques","Aplicaciones de préstamos usan permisos intrusivos como base para extorsionar a quienes se atrasan."],
+ ["vgft","Una mujer y sus familiares recibieron amenazas y fotomontajes tras un préstamo por aplicativo."],
+ ["vgft","Agresores invocaron vínculos con bandas criminales y con seguridad estatal para intensificar la sextorsión."],
+ ["vgft","Grupos de Telegram exigían compartir contenido sexual de mujeres conocidas como requisito de ingreso."],
+ ["vgft","Un hombre fue acusado de contactar a una adolescente por WhatsApp para solicitarle archivos sexuales."],
+ ["vgft","La cuenta de Instagram de una línea de ayuda fue suspendida, debilitando el acompañamiento a víctimas."],
+ ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
+ ["biometricos","El proyecto enfrentó clausuras por falta de permisos y cuestionamientos por la opacidad de sus aliados."],
+ ["cortes","Una sequía en las hidroeléctricas provocó apagones de hasta 14 horas diarias durante meses."],
+ ["vigilancia","La Asamblea abrió una fiscalización por denuncias de uso de Pegasus contra periodistas y activistas."],
+ ["vigilancia","Un decreto centralizó las cámaras municipales bajo un sistema con reconocimiento facial en tiempo real."],
+ ["vigilancia","El gobierno contrató a Palantir para cruzar datos de forma masiva desde la aduana."]
+],
+"222":[
+ ["normativa","La Ley de Ciberseguridad creó una agencia con facultades que podrían facilitar la eliminación de contenidos."],
+ ["normativa","La Ley de Protección de Datos convive con objetivos de seguridad definidos de forma amplia e imprecisa."],
+ ["censura","La Fiscalía preparó órdenes de captura contra periodistas tras una investigación sobre pactos con pandillas."],
+ ["filtraciones","Se filtraron datos de casi un millón de personas afiliadas al sistema de seguro social."],
+ ["filtraciones","Circularon 50 GB de instituciones educativas y 141 GB de empresas de gestión de cobros."],
+ ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."]
+],
+"320":[
+ ["vigilancia","Fiscalías usaron el acceso físico a dispositivos para presentar el cifrado como indicio de criminalidad."]
+],
+"340":[
+ ["censura","Un medio fue investigado por injuria tras informar sobre tensiones internas en las Fuerzas Armadas."],
+ ["filtraciones","Circulaban datos del censo electoral y millones de números telefónicos en sitios de venta ilegal."],
+ ["ataques","Campañas de phishing suplantaron a donantes internacionales para mapear redes de organizaciones indígenas."],
+ ["ataques","Una banda accedía a cuentas de WhatsApp mediante phishing para estafar a los contactos."],
+ ["ataques","Estafadores ofrecían dólares a precios bajos y desviaban las transferencias a cuentas propias."]
+],
+"484":[
+ ["normativa","Reformas a la Ley de Seguridad Nacional ampliaron de forma ambigua la noción de amenaza."],
+ ["normativa","Reformas constitucionales eliminaron al INAI como órgano autónomo de transparencia."],
+ ["filtraciones","Ataques a instituciones educativas públicas expusieron datos de miles de estudiantes."],
+ ["filtraciones","Se comercializaron credenciales fiscales de al menos 111 mil contribuyentes, incluidas firmas electrónicas."],
+ ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
+ ["desinformacion","Se viralizaron supuestas actas duplicadas en el conteo preliminar como prueba de fraude."],
+ ["desinformacion","Caídas momentáneas del sitio del instituto electoral fueron presentadas como manipulación."],
+ ["desinformacion","Se reutilizó un video de 2021 donde una persona vota armada, como si fuera de la elección de 2024."],
+ ["ataques","El troyano bancario Infranus modifica el portapapeles para desviar transferencias."],
+ ["ataques","Se reportaron más de mil aplicaciones de préstamos abusivos, varias activas en Google Play."],
+ ["vgft","Casos de sextorsión en aplicaciones de citas, donde el agresor construye confianza antes de amenazar."],
+ ["vgft","Se difundieron deepfakes sexuales de una senadora sin su consentimiento."],
+ ["vgft","Se difundieron deepfakes sexuales de una streamer sin su consentimiento."],
+ ["vigilancia","456 personas fueron atacadas con Pegasus en 2019, la cifra más alta a nivel global."],
+ ["vigilancia","La Sedena adquirió el software HIWIRE para monitorear y crear cuentas falsas contra críticos del ejército."]
+],
+"558":[
+ ["normativa","La reforma a la Ley de Ciberdelitos amplió las conductas sancionables por difundir información en línea."],
+ ["censura","El Estado bloqueó los dominios .ni de cinco medios independientes sin notificación previa."],
+ ["vigilancia","Una base militar en Managua opera un sistema capaz de interceptar llamadas, correos y transacciones bancarias."],
+ ["vigilancia","Persecución transnacional de personas exiliadas en Costa Rica mediante doxxing y monitoreo de redes."]
+],
+"591":[
+ ["cortes","El gobierno suspendió internet y telefonía en Bocas del Toro durante casi dos semanas. Un precedente inédito."]
+],
+"600":[
+ ["normativa","Una ley impuso vigilancia biométrica obligatoria mediante reconocimiento facial en estadios."],
+ ["filtraciones","Una filtración del tribunal electoral involucró datos de más de 7 millones de personas."],
+ ["filtraciones","Otra filtración expuso salarios y afiliación política de personas funcionarias de entidades públicas."],
+ ["ataques","Un ransomware dejó fuera de servicio todos los portales del Ministerio de Educación."],
+ ["vigilancia","Al menos 13 instituciones públicas instalaron cámaras biométricas sin marco legal ni estudios de impacto."],
+ ["vigilancia","El ciberpatrullaje fue incorporado a la ley de reforma de la Policía Nacional."]
+],
+"604":[
+ ["filtraciones","La filtración de datos de clientes de un banco se originó en un proveedor externo de monitoreo."],
+ ["filtraciones","Imágenes y datos del registro de identidad fueron expuestos mediante accesos del Ministerio del Interior."],
+ ["ataques","La autoridad bancaria alertó sobre al menos 17 aplicaciones de préstamos con esquemas de extorsión."],
+ ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
+ ["biometricos","La autoridad de protección de datos investigó la legalidad del modelo de escaneo de iris."]
+],
+"858":[
+ ["filtraciones","Se expusieron casi 15 mil solicitudes de visa, en su mayoría de personas migrantes y refugiadas."],
+ ["filtraciones","Una base de atención ciudadana con más de 574 mil registros quedó expuesta."],
+ ["filtraciones","Se filtraron más de 13 mil credenciales de acceso a sistemas del Estado."],
+ ["ataques","Un ransomware cifró la información de un gobierno departamental y exigió 650 mil dólares."],
+ ["vigilancia","La policía admitió monitorear redes sociales. Un adolescente fue detenido por error."]
+],
+"862":[
+ ["normativa","Un decreto creó el Consejo Nacional de Ciberseguridad con facultades extensas de cibervigilancia."],
+ ["censura","Tras las elecciones de 2024, una ola de bloqueos afectó a Signal, X, TikTok, Telegram y YouTube."],
+ ["censura","Se bloquearon sitios de proveedores de VPN para impedir que la ciudadanía eludiera las restricciones."],
+ ["censura","La operadora estatal bloqueó más de 30 servidores DNS públicos, incluidos los de Google."],
+ ["censura","Un ataque de denegación de servicio dejó inaccesible el sitio de un diario por cuatro horas."],
+ ["filtraciones","Se ofrecieron bases con millones de registros personales, con muestras para verificar su autenticidad."],
+ ["desinformacion","Perfiles de TikTok con estética de noticiero difundieron como hechos versiones no verificadas."],
+ ["desinformacion","Circularon capturas falsas donde una dirigenta opositora felicitaba un intento de golpe en Bolivia."],
+ ["desinformacion","Deepfakes de voz y audios fabricados con IA se atribuyeron a figuras de la oposición."],
+ ["desinformacion","Redes de cuentas que se citan entre sí simularon ser oposición para amplificar narrativas."],
+ ["cortes","Una caída afectó solo a las dos operadoras estatales, cuatro días después de las elecciones."],
+ ["cortes","Un colapso eléctrico dejó sin internet a 8 de cada 10 personas durante casi 21 horas."],
+ ["vigilancia","Una campaña de phishing recopiló datos personales de simpatizantes de la oposición."],
+ ["vigilancia","Se usaron drones para capturar los rostros de asistentes a manifestaciones."],
+ ["vigilancia","En operativos policiales se exigía desbloquear teléfonos para revisar conversaciones de WhatsApp."],
+ ["vigilancia","Una app estatal de servicios públicos fue reconvertida para denunciar manifestantes con foto y ubicación."]
+]
+};
+
+// Territorios dibujados como contexto geográfico, fuera del alcance del informe
+const INERT=new Set(["084","332","388","630","780","044","052","308","662","212","028","670","531","533","328","740"]);
+const OUT="#F0F0F0";
+const REGION=Object.keys(N);
+const WHY="La presencia de incidentes documentados puede responder a factores como la capacidad de monitoreo de las organizaciones locales, una cobertura mediática desigual entre países o la decisión de no difundir casos para proteger a las personas afectadas.";
+function toggleWhy(b){
+  const open=b.getAttribute("aria-expanded")==="true";
+  b.setAttribute("aria-expanded",String(!open));
+  b.parentElement.nextElementSibling.hidden=open;
+}
+function whyBlock(){
+  return ' <button class="why" aria-expanded="false" onclick="toggleWhy(this)">¿Por qué? <span class="car">▸</span></button></p>'
+       + '<p class="whytxt" hidden>'+WHY+'</p>';
+}
+let f="all", sel=null;
+const svg=d3.select("#map"), tip=document.getElementById("tip");
+const pad = id => String(id).padStart(3,"0");
+
+const SIL="#E6E6E6";
+function match(id){
+  const d=D[id];
+  if(!d) return false;
+  return f==="all" ? true : d.some(o=>o[0]===f);
+}
+function fill(id){
+  if(INERT.has(id)) return OUT;        // fuera del alcance: nunca cambia
+  const d=D[id];
+  if(!d) return "url(#h)";
+  const m=match(id);
+  if(!sel) return f==="all" ? MARK : (m ? T[f].c : OFF);
+  if(id===sel) return f==="all" ? MARK : (m ? T[f].c : OFF);
+  // hay un país seleccionado:
+  // en la vista general se aísla, pero con un filtro activo
+  // los demás países del filtro conservan su color para no perder el panorama
+  if(f==="all") return SIL;
+  return m ? T[f].c : SIL;
+}
+function count(){}
+function legend(){
+  let h2='<span class="lg"><i style="background:'+MARK+'"></i>Con incidentes documentados</span>';
+  h2+='<span class="lg"><i style="background:'+OUT+'"></i>Fuera del alcance del informe</span>';
+  document.getElementById("legend").innerHTML=h2;
+}
+const DEF={normativa:"Leyes, decretos y proyectos que configuran el marco legal para la vigilancia estatal, la censura y el acceso a la información, habilitando otros incidentes documentados en este informe.",censura:"Mecanismos estatales y privados que restringen plataformas, medios y expresiones en línea mediante interferencia técnica y persecución judicial.",filtraciones:"Exposición o acceso indebido a información personal o confidencial almacenada por entidades públicas o privadas.",desinformacion:"Circulación de contenidos falsos o engañosos que busca influir en el voto, favorecer o perjudicar candidaturas y erosionar la confianza en el proceso electoral.",ataques:"Acciones deliberadas contra infraestructuras o servicios digitales específicos, con el fin de obtener acceso, interrumpir servicios, extorsionar o cometer fraude.",vgft:"Actos de violencia por razón de género cometidos, facilitados, agravados o amplificados mediante tecnologías digitales, con daños físicos, sexuales, psicológicos, sociales, políticos o económicos.",biometricos:"Recolección de datos biométricos, como el iris, por parte de empresas que obtienen un beneficio económico o estratégico, en condiciones que ponen en duda la validez del consentimiento.",cortes:"Interrupción total o parcial de la conectividad en una zona determinada, por órdenes estatales, fallas en servicios o infraestructura deteriorada.",vigilancia:"Monitoreo, interceptación, recolección y análisis de datos realizados por actores estatales o privados con fines de control o neutralización de personas consideradas de interés."};
+function renderHome(){
+  sel=null;
+  document.getElementById("pt").textContent="Tipos de incidente";
+  document.getElementById("pk").textContent="Qué documenta este informe";
+  const rows=Object.keys(T).map(k=>
+    '<div class="grow"><span class="gname"><i style="background:'+T[k].c+'"></i>'+T[k].l+'</span>'
+    +'<p class="gdef">'+DEF[k]+'</p></div>').join("");
+  document.getElementById("pb").innerHTML=
+    '<p class="pnote pnote-top">Haz clic en un país del mapa para explorar sus casos.</p>'
+    + '<div class="plist">'+rows+'</div>';
+  document.getElementById("clear").classList.remove("on");
+  paint();
+}
+function setFilter(k){ f="all"; reset(); }
+function reset(){ renderHome(); }
+function panel(id){
+  const pk=document.getElementById("pk"), pt=document.getElementById("pt"), pb=document.getElementById("pb");
+  const name=N[id]||"País";
+  pt.textContent=name;
+  document.getElementById("clear").classList.add("on");
+  const d=D[id];
+  if(!d){
+    pk.textContent="Sin registro en este informe";
+    pb.innerHTML='<div class="note"><p><strong>Este informe no documenta incidentes en '+name+'</strong>, lo que no significa que no hayan ocurrido.'+whyBlock()+'</div>';
+    return;
+  }
+  const items = f==="all" ? d : d.filter(o=>o[0]===f);
+  if(f==="all"){
+    pk.textContent=items.length+(items.length===1?" incidente documentado":" incidentes documentados");
+  }else{
+    pk.textContent=items.length+(items.length===1?" incidente de ":" incidentes de ")+T[f].l.toLowerCase();
+  }
+  if(!items.length){
+    const que = f==="normativa" ? "desarrollos normativos" : "casos de "+T[f].l.toLowerCase();
+    pb.innerHTML='<div class="note"><p><strong>Este informe no documenta '+que+' en '+name+'</strong>, lo que no significa que no hayan ocurrido.'+whyBlock()+'<button class="seeall" onclick="setFilter(\'all\')">Ver todos los incidentes de '+name+'</button></div>';
+    return;
+  }
+  // con filtro activo la categoría ya está en el encabezado: no se repite en cada tarjeta
+  pb.innerHTML=items.map(o=>{
+    const tag = f==="all" ? '<span class="tag" style="color:'+T[o[0]].c+'">'+T[o[0]].l+'</span>' : '';
+    return '<div class="rec"><div class="bar" style="background:'+T[o[0]].c+'"></div><div>'+tag+'<p>'+o[1]+'</p></div></div>';
+  }).join("");
+  if(f!=="all" && d.length>items.length){
+    pb.innerHTML += '<div style="margin-top:6px"><button class="seeall" onclick="setFilter(\'all\')">Ver todos los incidentes de '+name+'</button></div>';
+  }
+}
+function paint(){
+  svg.selectAll(".country")
+    .attr("fill",d=>fill(pad(d.id)))
+    .classed("inert",d=> INERT.has(pad(d.id)))
+    .classed("dim",d=>{const id=pad(d.id);
+      return !!sel && id!==sel && !INERT.has(id) && (f==="all" || !match(id));})
+    .classed("soft",d=>{const id=pad(d.id);
+      return !!sel && id!==sel && !INERT.has(id) && f!=="all" && match(id);})
+    .classed("is-active",d=>pad(d.id)===sel);
+  count(); legend(); status();
+}
+function status(){
+  const now=document.getElementById("now"), cf=document.getElementById("clearf");
+  now.innerHTML='<i style="background:'+MARK+'"></i>'+(sel ? (N[sel]||"") : "Países con incidentes documentados");
+  cf.classList.toggle("on", !!sel);
+  cf.textContent="✕ Ver toda la región";
+}
+document.getElementById("clear").addEventListener("click",reset);
+document.getElementById("clearf").addEventListener("click",()=>{ f="all";
+  document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.f==="all")));
+  reset();
+});
+
+const dbtn=document.getElementById("dbtn"), dpan=document.getElementById("dpanel");
+dbtn.addEventListener("click",()=>{
+  const open=dbtn.getAttribute("aria-expanded")==="true";
+  dbtn.setAttribute("aria-expanded",String(!open));
+  dpan.classList.toggle("open",!open);
+});
+
+d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json").then(w=>{
+  const l=document.getElementById("loading"); if(l) l.remove();
+  let feats=topojson.feature(w,w.objects.countries).features.filter(x=>REGION.includes(pad(x.id)));
+  // recortar territorios insulares muy alejados (Galápagos en Ecuador, Isla de Pascua en Chile)
+  const CUT={"218":-85,"152":-85};
+  feats=feats.map(ft=>{
+    const lim=CUT[pad(ft.id)];
+    if(!lim || ft.geometry.type!=="MultiPolygon") return ft;
+    const keep=ft.geometry.coordinates.filter(poly=>{
+      const ring=poly[0];
+      const lons=ring.map(pt=>pt[0]);
+      return (lons.reduce((a,b)=>a+b,0)/lons.length) > lim;
+    });
+    return {...ft, geometry:{...ft.geometry, coordinates:keep.length?keep:ft.geometry.coordinates}};
+  });
+  const W=740,H=850;
+  svg.attr("viewBox","0 0 "+W+" "+H);
+  const defs=svg.append("defs");
+  const p=defs.append("pattern").attr("id","h").attr("width",6).attr("height",6)
+    .attr("patternUnits","userSpaceOnUse").attr("patternTransform","rotate(45)");
+  p.append("rect").attr("width",6).attr("height",6).attr("fill","#F2F2F2");
+  p.append("line").attr("x1",0).attr("y1",0).attr("x2",0).attr("y2",6).attr("stroke","#C8C8C8").attr("stroke-width",1.7);
+
+  const proj=d3.geoMercator().fitExtent([[20,20],[W-20,H-20]],{type:"FeatureCollection",features:feats});
+  const path=d3.geoPath(proj);
+
+  svg.append("g").selectAll("path").data(feats).join("path")
+    .attr("class","country").attr("d",path)
+    .attr("tabindex",d=>INERT.has(pad(d.id))?null:0)
+    .attr("role",d=>INERT.has(pad(d.id))?null:"button")
+    .attr("aria-label",d=>INERT.has(pad(d.id))?null:(N[pad(d.id)]||"País"))
+    .on("click",(e,d)=>{
+      const id=pad(d.id);
+      if(sel===id){ reset(); return; }
+      sel=id; paint(); panel(sel);
+    })
+    .on("keydown",(e,d)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();const id=pad(d.id);if(sel===id){reset();}else{sel=id;paint();panel(sel);}}})
+    .on("mousemove",(e,d)=>{
+      const id=pad(d.id), dd=D[id], nm=N[id]||"País";
+      if(!dd) tip.innerHTML=nm;
+      else{
+        const it=f==="all"?dd:dd.filter(o=>o[0]===f);
+        tip.innerHTML = it.length ? nm+"<span>"+it.length+"</span>" : nm;
+      }
+      tip.classList.add("on");
+      tip.style.left=(e.clientX+14)+"px"; tip.style.top=(e.clientY-10)+"px";
+    })
+    .on("mouseleave",()=>tip.classList.remove("on"));
+
+  document.querySelectorAll(".chip[data-f]").forEach(c=>{
+    c.style.color = c.dataset.f==="all" ? MARK : T[c.dataset.f].c;
+  });
+  renderHome();
+}).catch(err=>{
+  const l=document.getElementById("loading"); if(l) l.textContent="No se pudo cargar el mapa.";
+  console.error(err);
+});
+
+const st=document.createElement("style");
+let css="";
+Object.keys(T).forEach(k=>{css+='.chip[data-f="'+k+'"][aria-pressed="true"]{background:'+T[k].c+';color:#fff!important}\n';});
+css+='.chip[data-f="all"][aria-pressed="true"]{background:'+MARK+';color:var(--paper)!important}\n';
+st.textContent=css; document.head.appendChild(st);
+</script>
+</body>
+</html>
