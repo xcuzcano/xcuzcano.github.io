@@ -19,11 +19,20 @@
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 
   header{border-bottom:1px solid var(--line);padding:52px 0 30px}
-  .eyebrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:22px;
+  .hrow{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+  .eyebrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap;
     font-family:"Space Grotesk","Public Sans",sans-serif;font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:600}
   .eyebrow .org{color:var(--mark)}
   .eyebrow .sep{width:24px;height:1px;background:var(--line-strong)}
   .eyebrow .per{color:var(--ink-soft)}
+
+  .lang{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line-strong);border-radius:100px;background:#fff}
+  .lang button{font-family:"Space Grotesk","Public Sans",sans-serif;font-size:12px;font-weight:600;letter-spacing:.03em;
+    border:none;background:none;color:var(--ink-soft);padding:6px 13px;border-radius:100px;cursor:pointer;transition:.14s}
+  .lang button:hover{color:var(--ink)}
+  .lang button[aria-pressed="true"]{background:var(--mark);color:#fff}
+  .lang button:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
+
   h1{font-family:"Archivo",system-ui,sans-serif;font-weight:800;font-size:clamp(32px,4.6vw,56px);line-height:.99;letter-spacing:-.025em;max-width:17ch;margin-bottom:18px}
   .standfirst{font-size:17px;color:var(--ink-soft);max-width:64ch}
 
@@ -40,7 +49,7 @@
   .disclose-panel{
     max-height:0;overflow:hidden;transition:max-height .28s ease;
   }
-  .disclose-panel.open{max-height:280px}
+  .disclose-panel.open{max-height:420px}
   .disclose-inner{border-left:3px solid var(--mark);padding:4px 0 4px 16px;margin-top:12px;max-width:70ch}
   .disclose-inner p{font-size:14.5px;color:var(--ink-soft)}
   .disclose-inner strong{font-weight:600;color:var(--ink)}
@@ -162,16 +171,22 @@
 
 <header>
   <div class="wrap">
-    <div class="eyebrow"><span class="org">OLAD · Derechos Digitales</span><span class="sep"></span><span class="per">Junio 2024 – Mayo 2025</span></div>
-    <h1>En la mira 2:<br>Un panorama de las amenazas digitales en América Latina</h1>
-    <p class="standfirst">Incidentes documentados en 19 países, desde una perspectiva de derechos humanos e interés público.</p>
+    <div class="hrow">
+      <div class="eyebrow"><span class="org">OLAD · Derechos Digitales</span><span class="sep"></span><span class="per" data-i18n="period">Junio 2024 – Mayo 2025</span></div>
+      <div class="lang" role="group" aria-label="Idioma">
+        <button type="button" data-lang="es" lang="es" aria-pressed="true">Español</button>
+        <button type="button" data-lang="pt" lang="pt-BR" aria-pressed="false">Português</button>
+      </div>
+    </div>
+    <h1 data-i18n-html="h1">En la mira 2:<br>Un panorama de las amenazas digitales en América Latina</h1>
+    <p class="standfirst" data-i18n="standfirst">Incidentes documentados en 19 países, desde una perspectiva de derechos humanos e interés público.</p>
     <div class="disclose">
       <button class="disclose-btn" id="dbtn" aria-expanded="false" aria-controls="dpanel">
-        <span class="car">▸</span> Cómo leer este mapa
+        <span class="car">▸</span> <span data-i18n="howto">Cómo leer este mapa</span>
       </button>
       <div class="disclose-panel" id="dpanel">
         <div class="disclose-inner">
-          <p><strong>Esto no es un ranking.</strong> Que un país registre más o menos casos, o ninguno, no significa que su situación sea mejor o peor. La presencia de incidentes documentados puede responder a factores como la capacidad de monitoreo de las organizaciones locales, una cobertura mediática desigual entre países o la decisión de no difundir casos para proteger a las personas afectadas.</p>
+          <p data-i18n-html="howtoText"><strong>Esto no es un ranking.</strong> Que un país registre más o menos casos, o ninguno, no significa que su situación sea mejor o peor. La presencia de incidentes documentados puede responder a factores como la capacidad de monitoreo de las organizaciones locales, una cobertura mediática desigual entre países o la decisión de no difundir casos para proteger a las personas afectadas.</p>
         </div>
       </div>
     </div>
@@ -186,10 +201,10 @@
         <button class="clearf" id="clearf">✕ Limpiar filtro</button>
       </div>
       <div class="mapbox">
-        <div class="loading" id="loading">Cargando mapa…</div>
+        <div class="loading" id="loading" data-i18n="loading">Cargando mapa…</div>
         <svg id="map" role="img" aria-labelledby="mt md"></svg>
-        <span id="mt" class="sr">Mapa de América Latina y el Caribe</span>
-        <span id="md" class="sr">Los países con incidentes documentados aparecen marcados. Los territorios en gris quedan fuera del alcance de este informe.</span>
+        <span id="mt" class="sr" data-i18n="mapTitle">Mapa de América Latina y el Caribe</span>
+        <span id="md" class="sr" data-i18n="mapDesc">Los países con incidentes documentados aparecen marcados. Los territorios en gris quedan fuera del alcance de este informe.</span>
       </div>
       <div class="maplegend" id="legend"></div>
     </div>
@@ -200,12 +215,12 @@
           <p class="kicker" id="pk">Selecciona un país</p>
           <h2 id="pt">América Latina</h2>
         </div>
-        <button class="clearbtn" id="clear">Ver toda la región</button>
+        <button class="clearbtn" id="clear" data-i18n="seeRegion">Ver toda la región</button>
       </div>
       <div class="panel-body" id="pb">
-        <p class="hint">Haz clic en cualquier país del mapa para ver los incidentes documentados durante el período analizado.</p>
+        <p class="hint" data-i18n="hint">Haz clic en cualquier país del mapa para ver los incidentes documentados durante el período analizado.</p>
       </div>
-      <div class="panel-foot"><a class="more" href="https://www.derechosdigitales.org/recursos/en-la-mira-2/" id="ml">Leer el caso completo en el informe →</a></div>
+      <div class="panel-foot"><a class="more" href="https://www.derechosdigitales.org/recursos/en-la-mira-2/" id="ml" data-i18n="readMore">Leer el caso completo en el informe →</a></div>
     </aside>
   </div>
 </div>
@@ -213,10 +228,10 @@
 <section class="cta">
   <div class="wrap cta-inner">
     <div>
-      <h3>Cada caso tiene un contexto</h3>
-      <p>El informe completo documenta cada incidente con sus fuentes y todo lo que este mapa resume.</p>
+      <h3 data-i18n="ctaH">Cada caso tiene un contexto</h3>
+      <p data-i18n="ctaP">El informe completo documenta cada incidente con sus fuentes y todo lo que este mapa resume.</p>
     </div>
-    <a class="btn" href="https://www.derechosdigitales.org/recursos/en-la-mira-2/">Descargar En la mira 2 →</a>
+    <a class="btn" href="https://www.derechosdigitales.org/recursos/en-la-mira-2/" data-i18n="download">Descargar En la mira 2 →</a>
   </div>
 </section>
 
@@ -225,234 +240,344 @@
 <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
-const T={
- normativa:{l:"Normativa",c:"#7C8B94"},
- censura:{l:"Censura",c:"#FF5948"},
- filtraciones:{l:"Filtraciones de datos",c:"#D98E1F"},
- desinformacion:{l:"Desinformación en elecciones",c:"#5B7FA8"},
- ataques:{l:"Ataques dirigidos",c:"#7FA82E"},
- vgft:{l:"Violencia de género facilitada por las tecnologías",c:"#8B5B76"},
- biometricos:{l:"Explotación de datos biométricos",c:"#00A488"},
- cortes:{l:"Cortes de internet",c:"#1F6E8C"},
- vigilancia:{l:"Vigilancia",c:"#42382C"}
+/* ============================================================
+   IDIOMA: "es" (español) / "pt" (português do Brasil)
+   ============================================================ */
+const UI={
+ es:{
+  docTitle:"En la mira 2: Amenazas digitales en América Latina",
+  period:"Junio 2024 – Mayo 2025",
+  h1:"En la mira 2:<br>Un panorama de las amenazas digitales en América Latina",
+  standfirst:"Incidentes documentados en 19 países, desde una perspectiva de derechos humanos e interés público.",
+  howto:"Cómo leer este mapa",
+  howtoText:"<strong>Esto no es un ranking.</strong> Que un país registre más o menos casos, o ninguno, no significa que su situación sea mejor o peor. La presencia de incidentes documentados puede responder a factores como la capacidad de monitoreo de las organizaciones locales, una cobertura mediática desigual entre países o la decisión de no difundir casos para proteger a las personas afectadas.",
+  loading:"Cargando mapa…",
+  loadErr:"No se pudo cargar el mapa.",
+  mapTitle:"Mapa de América Latina y el Caribe",
+  mapDesc:"Los países con incidentes documentados aparecen marcados. Los territorios en gris quedan fuera del alcance de este informe.",
+  seeRegion:"Ver toda la región",
+  clearRegion:"✕ Ver toda la región",
+  hint:"Haz clic en cualquier país del mapa para ver los incidentes documentados durante el período analizado.",
+  readMore:"Leer el caso completo en el informe →",
+  ctaH:"Cada caso tiene un contexto",
+  ctaP:"El informe completo documenta cada incidente con sus fuentes y todo lo que este mapa resume.",
+  download:"Descargar En la mira 2 →",
+  reportUrl:"https://www.derechosdigitales.org/recursos/en-la-mira-2/",
+  typesTitle:"Tipos de incidente",
+  typesKicker:"Qué documenta este informe",
+  clickHint:"Haz clic en un país del mapa para explorar sus casos.",
+  countriesWith:"Países con incidentes documentados",
+  withInc:"Con incidentes documentados",
+  outScope:"Fuera del alcance del informe",
+  why:"¿Por qué?",
+  whyText:"La presencia de incidentes documentados puede responder a factores como la capacidad de monitoreo de las organizaciones locales, una cobertura mediática desigual entre países o la decisión de no difundir casos para proteger a las personas afectadas.",
+  country:"País",
+  noRecord:"Sin registro en este informe",
+  noInc:id=>"Este informe no documenta incidentes en "+nm(id),
+  noCat:(id,k)=>"Este informe no documenta "+(k==="normativa"?"desarrollos normativos":"casos de "+T[k].es.toLowerCase())+" en "+nm(id),
+  notMean:", lo que no significa que no hayan ocurrido.",
+  seeAll:id=>"Ver todos los incidentes de "+nm(id),
+  countAll:n=>n+(n===1?" incidente documentado":" incidentes documentados"),
+  countCat:(n,k)=>n+(n===1?" incidente de ":" incidentes de ")+T[k].es.toLowerCase()
+ },
+ pt:{
+  docTitle:"Na Mira 2: Ameaças digitais na América Latina",
+  period:"Junho 2024 – Maio 2025",
+  h1:"Na Mira 2:<br>Um panorama das ameaças digitais na América Latina",
+  standfirst:"Incidentes documentados em 19 países, a partir de uma perspectiva de direitos humanos e de interesse público.",
+  howto:"Como ler este mapa",
+  howtoText:"<strong>Isto não é um ranking.</strong> O fato de um país registrar mais ou menos casos, ou nenhum, não significa que sua situação seja melhor ou pior. A presença de incidentes documentados pode responder a fatores como a capacidade de monitoramento das organizações locais, uma cobertura midiática desigual entre os países ou a decisão de não divulgar casos para proteger as pessoas afetadas.",
+  loading:"Carregando mapa…",
+  loadErr:"Não foi possível carregar o mapa.",
+  mapTitle:"Mapa da América Latina e do Caribe",
+  mapDesc:"Os países com incidentes documentados aparecem destacados. Os territórios em cinza ficam fora do escopo deste relatório.",
+  seeRegion:"Ver toda a região",
+  clearRegion:"✕ Ver toda a região",
+  hint:"Clique em qualquer país do mapa para ver os incidentes documentados durante o período analisado.",
+  readMore:"Ler o caso completo no relatório →",
+  ctaH:"Cada caso tem um contexto",
+  ctaP:"O relatório completo documenta cada incidente com suas fontes e tudo o que este mapa resume.",
+  download:"Baixar Na Mira 2 →",
+  reportUrl:"https://www.derechosdigitales.org/pt/recursos/en-la-mira-2-pt/",
+  typesTitle:"Tipos de incidente",
+  typesKicker:"O que este relatório documenta",
+  clickHint:"Clique em um país do mapa para explorar seus casos.",
+  countriesWith:"Países com incidentes documentados",
+  withInc:"Com incidentes documentados",
+  outScope:"Fora do escopo do relatório",
+  why:"Por quê?",
+  whyText:"A presença de incidentes documentados pode responder a fatores como a capacidade de monitoramento das organizações locais, uma cobertura midiática desigual entre os países ou a decisão de não divulgar casos para proteger as pessoas afetadas.",
+  country:"País",
+  noRecord:"Sem registro neste relatório",
+  noInc:id=>"Este relatório não documenta incidentes "+em(id),
+  noCat:(id,k)=>"Este relatório não documenta "+(k==="normativa"?"desenvolvimentos normativos":"casos de "+T[k].pt.toLowerCase())+" "+em(id),
+  notMean:", o que não significa que não tenham ocorrido.",
+  seeAll:id=>"Ver todos os incidentes "+de(id),
+  countAll:n=>n+(n===1?" incidente documentado":" incidentes documentados"),
+  countCat:(n,k)=>n+(n===1?" incidente de ":" incidentes de ")+T[k].pt.toLowerCase()
+ }
 };
+
+function pickLang(){
+  try{ const q=new URLSearchParams(location.search).get("lang"); if(q==="pt"||q==="es") return q; }catch(e){}
+  try{ const s=localStorage.getItem("elm2-lang"); if(s==="pt"||s==="es") return s; }catch(e){}
+  try{ if((navigator.language||"").toLowerCase().startsWith("pt")) return "pt"; }catch(e){}
+  return "es";
+}
+let lang=pickLang();
+const t=k=>UI[lang][k];
+
+const T={
+ normativa:{es:"Normativa",pt:"Normativa",c:"#7C8B94"},
+ censura:{es:"Censura",pt:"Censura",c:"#FF5948"},
+ filtraciones:{es:"Filtraciones de datos",pt:"Vazamentos de dados",c:"#D98E1F"},
+ desinformacion:{es:"Desinformación en elecciones",pt:"Desinformação em eleições",c:"#5B7FA8"},
+ ataques:{es:"Ataques dirigidos",pt:"Ataques direcionados",c:"#7FA82E"},
+ vgft:{es:"Violencia de género facilitada por las tecnologías",pt:"Violência de gênero facilitada pelas tecnologias",c:"#8B5B76"},
+ biometricos:{es:"Explotación de datos biométricos",pt:"Exploração de dados biométricos",c:"#00A488"},
+ cortes:{es:"Cortes de internet",pt:"Interrupções de internet",c:"#1F6E8C"},
+ vigilancia:{es:"Vigilancia",pt:"Vigilância",c:"#42382C"}
+};
+const tl=k=>T[k][lang];
 const MARK="#06605C", OFF="#DCDCDC";
 
+// [español, português, artigo em português: "o" | "a" | "as" | ""]
 const N={
-"484":"México","320":"Guatemala","084":"Belice","340":"Honduras","222":"El Salvador","558":"Nicaragua",
-"188":"Costa Rica","591":"Panamá","192":"Cuba","214":"República Dominicana","332":"Haití","388":"Jamaica",
-"630":"Puerto Rico","780":"Trinidad y Tobago","044":"Bahamas","052":"Barbados","308":"Granada",
-"662":"Santa Lucía","212":"Dominica","028":"Antigua y Barbuda","670":"San Vicente y las Granadinas",
-"531":"Curazao","533":"Aruba","170":"Colombia","862":"Venezuela","328":"Guyana","740":"Surinam",
-"218":"Ecuador","604":"Perú","076":"Brasil","068":"Bolivia","600":"Paraguay","152":"Chile",
-"032":"Argentina","858":"Uruguay"
+"484":["México","México","o"],"320":["Guatemala","Guatemala","a"],"084":["Belice","Belize",""],
+"340":["Honduras","Honduras",""],"222":["El Salvador","El Salvador",""],"558":["Nicaragua","Nicarágua","a"],
+"188":["Costa Rica","Costa Rica","a"],"591":["Panamá","Panamá","o"],"192":["Cuba","Cuba",""],
+"214":["República Dominicana","República Dominicana","a"],"332":["Haití","Haiti","o"],"388":["Jamaica","Jamaica","a"],
+"630":["Puerto Rico","Porto Rico",""],"780":["Trinidad y Tobago","Trinidad e Tobago",""],"044":["Bahamas","Bahamas","as"],
+"052":["Barbados","Barbados",""],"308":["Granada","Granada",""],"662":["Santa Lucía","Santa Lúcia",""],
+"212":["Dominica","Dominica",""],"028":["Antigua y Barbuda","Antígua e Barbuda",""],
+"670":["San Vicente y las Granadinas","São Vicente e Granadinas",""],"531":["Curazao","Curaçao",""],
+"533":["Aruba","Aruba",""],"170":["Colombia","Colômbia","a"],"862":["Venezuela","Venezuela","a"],
+"328":["Guyana","Guiana","a"],"740":["Surinam","Suriname","o"],"218":["Ecuador","Equador","o"],
+"604":["Perú","Peru","o"],"076":["Brasil","Brasil","o"],"068":["Bolivia","Bolívia","a"],
+"600":["Paraguay","Paraguai","o"],"152":["Chile","Chile","o"],"032":["Argentina","Argentina","a"],
+"858":["Uruguay","Uruguai","o"]
 };
+function nm(id){ const n=N[id]; return n ? n[lang==="pt"?1:0] : t("country"); }
+const EM={o:"no ",a:"na ",as:"nas ","":"em "}, DE={o:"do ",a:"da ",as:"das ","":"de "};
+function em(id){ const n=N[id]; return (n?EM[n[2]]:"em ")+nm(id); }
+function de(id){ const n=N[id]; return (n?DE[n[2]]:"de ")+nm(id); }
 
+const BK=["La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras.",
+          "A plataforma de banco digital Bankingly expôs dados de clientes de cooperativas e instituições de microfinanças."];
+const WD=["World desplegó dispositivos de escaneo de iris a cambio de criptomonedas.",
+          "A World implantou dispositivos de escaneamento de íris em troca de criptomoedas."];
+
+// [categoría, español, português]
 const D={
 "032":[
- ["normativa","La Resolución 428/2024 habilitó el monitoreo sistemático de fuentes abiertas con tecnologías automatizadas."],
- ["normativa","El Decreto 383/2025 incorporó el ciberpatrullaje como facultad de la Policía Federal, sin autorización judicial."],
- ["normativa","Una reforma amplió las causales de reserva en el régimen de acceso a la información pública."],
- ["filtraciones","El hackeo a un proveedor de mensajería SMS permitió interceptar códigos de verificación en tiempo real."],
- ["filtraciones","Se pusieron a la venta más de 665 mil estudios médicos de pacientes."],
- ["filtraciones","Se ofrecieron bases con millones de registros personales, con muestras para verificar su autenticidad."],
- ["ataques","Un ransomware afectó a la empresa que distribuye tarjetas de crédito y documentación oficial."],
- ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas, con picos de 9.500 registros diarios."],
- ["vigilancia","Una nueva unidad estatal habilita reconocimiento facial, drones y algoritmos para predecir delitos."],
- ["vigilancia","El ciberpatrullaje fue reinstaurado en 2024, tras haber sido derogado en 2022."]
+ ["normativa","La Resolución 428/2024 habilitó el monitoreo sistemático de fuentes abiertas con tecnologías automatizadas.","A Resolução 428/2024 habilitou o monitoramento sistemático de fontes abertas com tecnologias automatizadas."],
+ ["normativa","El Decreto 383/2025 incorporó el ciberpatrullaje como facultad de la Policía Federal, sin autorización judicial.","O Decreto 383/2025 incorporou o ciberpatrulhamento como atribuição da Polícia Federal, sem autorização judicial."],
+ ["normativa","Una reforma amplió las causales de reserva en el régimen de acceso a la información pública.","Uma reforma ampliou as hipóteses de sigilo no regime de acesso à informação pública."],
+ ["filtraciones","El hackeo a un proveedor de mensajería SMS permitió interceptar códigos de verificación en tiempo real.","A invasão de um provedor de mensagens SMS permitiu interceptar códigos de verificação em tempo real."],
+ ["filtraciones","Se pusieron a la venta más de 665 mil estudios médicos de pacientes.","Mais de 665 mil exames médicos de pacientes foram colocados à venda."],
+ ["filtraciones","Se ofrecieron bases con millones de registros personales, con muestras para verificar su autenticidad.","Foram oferecidas bases com milhões de registros pessoais, com amostras para comprovar sua autenticidade."],
+ ["ataques","Un ransomware afectó a la empresa que distribuye tarjetas de crédito y documentación oficial.","Um ransomware afetou a empresa que distribui cartões de crédito e documentos oficiais."],
+ ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas, con picos de 9.500 registros diarios.","A World implantou dispositivos de escaneamento de íris em troca de criptomoedas, com picos de 9.500 registros diários."],
+ ["vigilancia","Una nueva unidad estatal habilita reconocimiento facial, drones y algoritmos para predecir delitos.","Uma nova unidade estatal habilita reconhecimento facial, drones e algoritmos para prever crimes."],
+ ["vigilancia","El ciberpatrullaje fue reinstaurado en 2024, tras haber sido derogado en 2022.","O ciberpatrulhamento foi restabelecido em 2024, depois de ter sido revogado em 2022."]
 ],
 "068":[
- ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
- ["ataques","Cientos de ataques contra páginas estatales, incluido un defacement a la Cámara de Senadores."],
- ["vgft","Una línea de ayuda registró 377 casos de violencia digital durante el período."],
- ["vgft","Ataques con deepfakes contra mujeres en política, con insinuaciones sexuales para erosionar su legitimidad."]
+ ["filtraciones",...BK],
+ ["ataques","Cientos de ataques contra páginas estatales, incluido un defacement a la Cámara de Senadores.","Centenas de ataques contra sites estatais, incluindo um defacement na Câmara de Senadores."],
+ ["vgft","Una línea de ayuda registró 377 casos de violencia digital durante el período.","Uma linha de apoio registrou 377 casos de violência digital durante o período."],
+ ["vgft","Ataques con deepfakes contra mujeres en política, con insinuaciones sexuales para erosionar su legitimidad.","Ataques com deepfakes contra mulheres na política, com insinuações sexuais para minar sua legitimidade."]
 ],
 "076":[
- ["censura","El Supremo Tribunal ordenó la suspensión total de X, con sanciones a quienes la evadieran por VPN."],
- ["filtraciones","Ataques a instituciones educativas públicas expusieron datos de miles de estudiantes menores de edad."],
- ["filtraciones","Venta de más de 250 mil registros bancarios en foros clandestinos."],
- ["desinformacion","Al menos cinco candidatas fueron atacadas con deepfakes sexuales durante la campaña."],
- ["desinformacion","El 17% de los enlaces compartidos por grupos de extrema derecha en WhatsApp contenía desinformación."],
- ["ataques","Una organización criminal habilitó más de 180 chips con datos de terceros para vaciar cuentas bancarias."],
- ["ataques","Instituciones del Estado sufrieron ciberataques simultáneos el mismo día del bloqueo de X."],
- ["vgft","TikTok expone progresivamente a adolescentes varones a narrativas que degradan a las mujeres."],
- ["vgft","Una campaña masiva de publicidad antiaborto en Meta combina segmentación y agenda ultraconservadora."],
- ["biometricos","La autoridad de protección de datos ordenó a World suspender la compensación en criptomonedas."],
- ["vigilancia","São Paulo instaló 40.000 cámaras con reconocimiento facial. Más del 8% de los arrestos fueron errores."],
- ["vigilancia","Cerca de 400 de esas cámaras se instalaron en escuelas, registrando rostros de estudiantes."],
- ["vigilancia","17 puntos de reconocimiento facial en Copacabana durante la celebración de Año Nuevo."],
- ["vigilancia","Cámaras, drones y 18 puntos de control en el concierto de Lady Gaga, con 2,5 millones de asistentes."],
- ["vigilancia","El gobierno licitó servicios de perfilamiento en redes con análisis de emociones mediante IA."]
+ ["censura","El Supremo Tribunal ordenó la suspensión total de X, con sanciones a quienes la evadieran por VPN.","O Supremo Tribunal Federal ordenou a suspensão total do X, com sanções a quem a contornasse por VPN."],
+ ["filtraciones","Ataques a instituciones educativas públicas expusieron datos de miles de estudiantes menores de edad.","Ataques a instituições de ensino públicas expuseram dados de milhares de estudantes menores de idade."],
+ ["filtraciones","Venta de más de 250 mil registros bancarios en foros clandestinos.","Venda de mais de 250 mil registros bancários em fóruns clandestinos."],
+ ["desinformacion","Al menos cinco candidatas fueron atacadas con deepfakes sexuales durante la campaña.","Pelo menos cinco candidatas foram atacadas com deepfakes sexuais durante a campanha."],
+ ["desinformacion","El 17% de los enlaces compartidos por grupos de extrema derecha en WhatsApp contenía desinformación.","17% dos links compartilhados por grupos de extrema direita no WhatsApp continham desinformação."],
+ ["ataques","Una organización criminal habilitó más de 180 chips con datos de terceros para vaciar cuentas bancarias.","Uma organização criminosa habilitou mais de 180 chips com dados de terceiros para esvaziar contas bancárias."],
+ ["ataques","Instituciones del Estado sufrieron ciberataques simultáneos el mismo día del bloqueo de X.","Instituições do Estado sofreram ataques cibernéticos simultâneos no mesmo dia do bloqueio do X."],
+ ["vgft","TikTok expone progresivamente a adolescentes varones a narrativas que degradan a las mujeres.","O TikTok expõe progressivamente adolescentes do sexo masculino a narrativas que degradam as mulheres."],
+ ["vgft","Una campaña masiva de publicidad antiaborto en Meta combina segmentación y agenda ultraconservadora.","Uma campanha massiva de publicidade antiaborto na Meta combina segmentação e agenda ultraconservadora."],
+ ["biometricos","La autoridad de protección de datos ordenó a World suspender la compensación en criptomonedas.","A autoridade de proteção de dados ordenou que a World suspendesse a compensação em criptomoedas."],
+ ["vigilancia","São Paulo instaló 40.000 cámaras con reconocimiento facial. Más del 8% de los arrestos fueron errores.","São Paulo instalou 40.000 câmeras com reconhecimento facial. Mais de 8% das prisões foram erros."],
+ ["vigilancia","Cerca de 400 de esas cámaras se instalaron en escuelas, registrando rostros de estudiantes.","Cerca de 400 dessas câmeras foram instaladas em escolas, registrando rostos de estudantes."],
+ ["vigilancia","17 puntos de reconocimiento facial en Copacabana durante la celebración de Año Nuevo.","17 pontos de reconhecimento facial em Copacabana durante a celebração do Ano-Novo."],
+ ["vigilancia","Cámaras, drones y 18 puntos de control en el concierto de Lady Gaga, con 2,5 millones de asistentes.","Câmeras, drones e 18 pontos de controle no show da Lady Gaga, com 2,5 milhões de espectadores."],
+ ["vigilancia","El gobierno licitó servicios de perfilamiento en redes con análisis de emociones mediante IA.","O governo licitou serviços de perfilamento nas redes sociais com análise de emoções por meio de IA."]
 ],
 "152":[
- ["normativa","Nuevas leyes de protección de datos y ciberseguridad conviven con normas que autorizan interceptar comunicaciones."],
- ["filtraciones","Un ransomware contra una universidad derivó en la publicación de 46 GB con datos de estudiantes y personal."],
- ["desinformacion","El desfase de actualización del sitio del Servel fue reinterpretado como señal de manipulación."],
- ["ataques","Mensajes sobre puntos por vencer de un programa de fidelización dirigían a un sitio clonado."],
- ["vgft","Un estudiante fue acusado de crear deepfakes sexuales de sus compañeras."],
- ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
- ["biometricos","La Corte Suprema ordenó eliminar el World ID de un adolescente escaneado sin consentimiento válido."],
- ["cortes","Un fallo eléctrico dejó sin internet ni telefonía a 14 de 16 regiones por más de 12 horas."]
+ ["normativa","Nuevas leyes de protección de datos y ciberseguridad conviven con normas que autorizan interceptar comunicaciones.","Novas leis de proteção de dados e cibersegurança convivem com normas que autorizam interceptar comunicações."],
+ ["filtraciones","Un ransomware contra una universidad derivó en la publicación de 46 GB con datos de estudiantes y personal.","Um ransomware contra uma universidade resultou na publicação de 46 GB com dados de estudantes e funcionários."],
+ ["desinformacion","El desfase de actualización del sitio del Servel fue reinterpretado como señal de manipulación.","O atraso na atualização do site do Servel foi reinterpretado como sinal de manipulação."],
+ ["ataques","Mensajes sobre puntos por vencer de un programa de fidelización dirigían a un sitio clonado.","Mensagens sobre pontos prestes a expirar de um programa de fidelidade direcionavam para um site clonado."],
+ ["vgft","Un estudiante fue acusado de crear deepfakes sexuales de sus compañeras.","Um estudante foi acusado de criar deepfakes sexuais de suas colegas."],
+ ["biometricos",...WD],
+ ["biometricos","La Corte Suprema ordenó eliminar el World ID de un adolescente escaneado sin consentimiento válido.","A Corte Suprema ordenou excluir o World ID de um adolescente escaneado sem consentimento válido."],
+ ["cortes","Un fallo eléctrico dejó sin internet ni telefonía a 14 de 16 regiones por más de 12 horas.","Uma falha elétrica deixou 14 das 16 regiões sem internet nem telefonia por mais de 12 horas."]
 ],
 "170":[
- ["normativa","Un proyecto de ley propone una agencia con facultades para ordenar el cese de operaciones en el ciberespacio."],
- ["censura","Coljuegos ordenó a los proveedores bloquear Reddit mediante restricciones por DNS."],
- ["filtraciones","La app de pagos GoPass dejó abierto un contenedor en la nube con datos de casi un millón de personas."],
- ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
- ["ataques","Troyanos de administración remota se distribuyeron por correos que suplantaban bancos y mensajería."],
- ["ataques","Aplicaciones de préstamos operan con permisos intrusivos y prácticas de extorsión."],
- ["ataques","Campañas de phishing suplantaron a la DIAN con falsos avisos de deuda."],
- ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
- ["cortes","Una tormenta torrencial cortó el suministro eléctrico en Chocó y dejó sin internet entre 6 y 12 horas."],
- ["cortes","Una segunda caída en Chocó dejó sin conectividad entre 3 y 6 horas, donde solo el 13% tiene acceso."],
- ["vigilancia","Estados Unidos financió el uso de Pegasus en el país con 11 millones de dólares."],
- ["vigilancia","Se elaboró un listado de 486 usuarios de X clasificados según su posición frente al gobierno."]
+ ["normativa","Un proyecto de ley propone una agencia con facultades para ordenar el cese de operaciones en el ciberespacio.","Um projeto de lei propõe uma agência com atribuições para ordenar a cessação de operações no ciberespaço."],
+ ["censura","Coljuegos ordenó a los proveedores bloquear Reddit mediante restricciones por DNS.","A Coljuegos ordenou aos provedores que bloqueassem o Reddit por meio de restrições de DNS."],
+ ["filtraciones","La app de pagos GoPass dejó abierto un contenedor en la nube con datos de casi un millón de personas.","O app de pagamentos GoPass deixou aberto um contêiner na nuvem com dados de quase um milhão de pessoas."],
+ ["filtraciones",...BK],
+ ["ataques","Troyanos de administración remota se distribuyeron por correos que suplantaban bancos y mensajería.","Trojans de acesso remoto foram distribuídos por e-mails que se passavam por bancos e serviços de mensagens."],
+ ["ataques","Aplicaciones de préstamos operan con permisos intrusivos y prácticas de extorsión.","Aplicativos de empréstimo operam com permissões invasivas e práticas de extorsão."],
+ ["ataques","Campañas de phishing suplantaron a la DIAN con falsos avisos de deuda.","Campanhas de phishing se passaram pela DIAN com falsos avisos de dívida."],
+ ["biometricos",...WD],
+ ["cortes","Una tormenta torrencial cortó el suministro eléctrico en Chocó y dejó sin internet entre 6 y 12 horas.","Uma tempestade torrencial interrompeu o fornecimento de energia no Chocó e deixou a região sem internet por 6 a 12 horas."],
+ ["cortes","Una segunda caída en Chocó dejó sin conectividad entre 3 y 6 horas, donde solo el 13% tiene acceso.","Uma segunda queda no Chocó, onde apenas 13% têm acesso, deixou a região sem conectividade por 3 a 6 horas."],
+ ["vigilancia","Estados Unidos financió el uso de Pegasus en el país con 11 millones de dólares.","Os Estados Unidos financiaram o uso do Pegasus no país com 11 milhões de dólares."],
+ ["vigilancia","Se elaboró un listado de 486 usuarios de X clasificados según su posición frente al gobierno.","Foi elaborada uma lista de 486 usuários do X classificados de acordo com sua posição em relação ao governo."]
 ],
 "188":[
- ["filtraciones","Una mala configuración en Movistar dejó accesibles 650 mil documentos de identidad y selfies de verificación."],
- ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
- ["ataques","Un fallo obligó a una operadora a indemnizar a una víctima de SIM swapping por no verificar identidades."],
- ["ataques","El acceso no autorizado a un correo universitario permitió enviar una amenaza de bomba y evacuar el campus."]
+ ["filtraciones","Una mala configuración en Movistar dejó accesibles 650 mil documentos de identidad y selfies de verificación.","Uma configuração incorreta na Movistar deixou acessíveis 650 mil documentos de identidade e selfies de verificação."],
+ ["filtraciones",...BK],
+ ["ataques","Un fallo obligó a una operadora a indemnizar a una víctima de SIM swapping por no verificar identidades.","Uma decisão judicial obrigou uma operadora a indenizar uma vítima de SIM swapping por não verificar identidades."],
+ ["ataques","El acceso no autorizado a un correo universitario permitió enviar una amenaza de bomba y evacuar el campus.","O acesso não autorizado a um e-mail universitário permitiu enviar uma ameaça de bomba que levou à evacuação do campus."]
 ],
 "192":[
- ["normativa","La Ley de Comunicación Social estableció un régimen integral de control sobre contenidos y medios digitales."],
- ["censura","El Estado analiza el tráfico en tiempo real para bloquear apps de mensajería cifrada como Signal."],
- ["censura","Apagones deliberados de ETECSA durante movilizaciones sociales, junto con alzas de tarifas."],
- ["censura","Condenas de cárcel por publicaciones en redes y renuncia forzada de al menos nueve periodistas."],
- ["cortes","Tres colapsos del sistema eléctrico por fallas técnicas dejaron sin luz ni internet a millones de personas."],
- ["cortes","El huracán Rafael provocó una nueva caída del sistema eléctrico y de la conectividad."],
- ["cortes","El país ocupó el último lugar mundial en velocidad de descarga, con 2,96 Mbps de promedio."],
- ["cortes","La dolarización parcial de ETECSA volvió la conectividad un privilegio para quienes tienen divisas."]
+ ["normativa","La Ley de Comunicación Social estableció un régimen integral de control sobre contenidos y medios digitales.","A Lei de Comunicação Social estabeleceu um regime integral de controle sobre conteúdos e meios de comunicação digitais."],
+ ["censura","El Estado analiza el tráfico en tiempo real para bloquear apps de mensajería cifrada como Signal.","O Estado analisa o tráfego em tempo real para bloquear apps de mensagens criptografadas como o Signal."],
+ ["censura","Apagones deliberados de ETECSA durante movilizaciones sociales, junto con alzas de tarifas.","Cortes deliberados de internet pela ETECSA durante mobilizações sociais, junto com aumentos de tarifas."],
+ ["censura","Condenas de cárcel por publicaciones en redes y renuncia forzada de al menos nueve periodistas.","Condenações à prisão por publicações nas redes sociais e demissão forçada de pelo menos nove jornalistas."],
+ ["cortes","Tres colapsos del sistema eléctrico por fallas técnicas dejaron sin luz ni internet a millones de personas.","Três colapsos do sistema elétrico por falhas técnicas deixaram milhões de pessoas sem luz nem internet."],
+ ["cortes","El huracán Rafael provocó una nueva caída del sistema eléctrico y de la conectividad.","O furacão Rafael provocou uma nova queda do sistema elétrico e da conectividade."],
+ ["cortes","El país ocupó el último lugar mundial en velocidad de descarga, con 2,96 Mbps de promedio.","O país ficou em último lugar no mundo em velocidade de download, com média de 2,96 Mbps."],
+ ["cortes","La dolarización parcial de ETECSA volvió la conectividad un privilegio para quienes tienen divisas.","A dolarização parcial da ETECSA tornou a conectividade um privilégio de quem tem moeda estrangeira."]
 ],
 "214":[
- ["censura","Una empresa extranjera amenazó con suspender el alojamiento web de un diario si no borraba un reportaje."],
- ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
- ["ataques","Fueron vulneradas las cuentas de X del presidente, ministros y el presidente del Senado."],
- ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
- ["biometricos","Pro Consumidor ordenó el cese de operaciones por cláusulas abusivas y falta de domicilio local."]
+ ["censura","Una empresa extranjera amenazó con suspender el alojamiento web de un diario si no borraba un reportaje.","Uma empresa estrangeira ameaçou suspender a hospedagem do site de um jornal caso ele não apagasse uma reportagem."],
+ ["filtraciones",...BK],
+ ["ataques","Fueron vulneradas las cuentas de X del presidente, ministros y el presidente del Senado.","Foram invadidas as contas no X do presidente, de ministros e do presidente do Senado."],
+ ["biometricos",...WD],
+ ["biometricos","Pro Consumidor ordenó el cese de operaciones por cláusulas abusivas y falta de domicilio local.","A Pro Consumidor ordenou a cessação das operações por cláusulas abusivas e falta de domicílio local."]
 ],
 "218":[
- ["normativa","Una nueva Ley de Inteligencia habilita interceptar comunicaciones sin orden judicial."],
- ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
- ["filtraciones","Datos del servicio de emergencias ECU 911 llegaron a funerarias, que contactaban a familiares anticipadamente."],
- ["desinformacion","Circuló un video que afirmaba que la autoridad electoral entregaba bolígrafos con trazo borrable."],
- ["desinformacion","Una imagen falsa atribuía a la OEA la declaración de que los resultados no eran legales."],
- ["desinformacion","Piezas fabricadas replicaron logos de medios e instituciones para proyectar legitimidad."],
- ["desinformacion","Empresas registradas en EEUU habrían usado productos de Google para pautar anuncios desinformativos."],
- ["ataques","Aplicaciones de préstamos usan permisos intrusivos como base para extorsionar a quienes se atrasan."],
- ["vgft","Una mujer y sus familiares recibieron amenazas y fotomontajes tras un préstamo por aplicativo."],
- ["vgft","Agresores invocaron vínculos con bandas criminales y con seguridad estatal para intensificar la sextorsión."],
- ["vgft","Grupos de Telegram exigían compartir contenido sexual de mujeres conocidas como requisito de ingreso."],
- ["vgft","Un hombre fue acusado de contactar a una adolescente por WhatsApp para solicitarle archivos sexuales."],
- ["vgft","La cuenta de Instagram de una línea de ayuda fue suspendida, debilitando el acompañamiento a víctimas."],
- ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
- ["biometricos","El proyecto enfrentó clausuras por falta de permisos y cuestionamientos por la opacidad de sus aliados."],
- ["cortes","Una sequía en las hidroeléctricas provocó apagones de hasta 14 horas diarias durante meses."],
- ["vigilancia","La Asamblea abrió una fiscalización por denuncias de uso de Pegasus contra periodistas y activistas."],
- ["vigilancia","Un decreto centralizó las cámaras municipales bajo un sistema con reconocimiento facial en tiempo real."],
- ["vigilancia","El gobierno contrató a Palantir para cruzar datos de forma masiva desde la aduana."]
+ ["normativa","Una nueva Ley de Inteligencia habilita interceptar comunicaciones sin orden judicial.","Uma nova Lei de Inteligência permite interceptar comunicações sem ordem judicial."],
+ ["filtraciones",...BK],
+ ["filtraciones","Datos del servicio de emergencias ECU 911 llegaron a funerarias, que contactaban a familiares anticipadamente.","Dados do serviço de emergência ECU 911 chegaram a funerárias, que contatavam familiares antecipadamente."],
+ ["desinformacion","Circuló un video que afirmaba que la autoridad electoral entregaba bolígrafos con trazo borrable.","Circulou um vídeo que afirmava que a autoridade eleitoral entregava canetas com tinta apagável."],
+ ["desinformacion","Una imagen falsa atribuía a la OEA la declaración de que los resultados no eran legales.","Uma imagem falsa atribuía à OEA a declaração de que os resultados não eram legais."],
+ ["desinformacion","Piezas fabricadas replicaron logos de medios e instituciones para proyectar legitimidad.","Peças fabricadas reproduziram logotipos de veículos de comunicação e instituições para projetar legitimidade."],
+ ["desinformacion","Empresas registradas en EEUU habrían usado productos de Google para pautar anuncios desinformativos.","Empresas registradas nos EUA teriam usado produtos do Google para veicular anúncios desinformativos."],
+ ["ataques","Aplicaciones de préstamos usan permisos intrusivos como base para extorsionar a quienes se atrasan.","Aplicativos de empréstimo usam permissões invasivas como base para extorquir quem atrasa os pagamentos."],
+ ["vgft","Una mujer y sus familiares recibieron amenazas y fotomontajes tras un préstamo por aplicativo.","Uma mulher e seus familiares receberam ameaças e fotomontagens após um empréstimo por aplicativo."],
+ ["vgft","Agresores invocaron vínculos con bandas criminales y con seguridad estatal para intensificar la sextorsión.","Agressores alegaram vínculos com grupos criminosos e com órgãos de segurança do Estado para intensificar a sextorsão."],
+ ["vgft","Grupos de Telegram exigían compartir contenido sexual de mujeres conocidas como requisito de ingreso.","Grupos do Telegram exigiam o compartilhamento de conteúdo sexual de mulheres conhecidas como requisito de entrada."],
+ ["vgft","Un hombre fue acusado de contactar a una adolescente por WhatsApp para solicitarle archivos sexuales.","Um homem foi acusado de contatar uma adolescente pelo WhatsApp para lhe pedir arquivos de conteúdo sexual."],
+ ["vgft","La cuenta de Instagram de una línea de ayuda fue suspendida, debilitando el acompañamiento a víctimas.","A conta no Instagram de uma linha de apoio foi suspensa, enfraquecendo o acompanhamento às vítimas."],
+ ["biometricos",...WD],
+ ["biometricos","El proyecto enfrentó clausuras por falta de permisos y cuestionamientos por la opacidad de sus aliados.","O projeto enfrentou interdições por falta de licenças e questionamentos pela opacidade de seus parceiros."],
+ ["cortes","Una sequía en las hidroeléctricas provocó apagones de hasta 14 horas diarias durante meses.","Uma seca nas hidrelétricas provocou apagões de até 14 horas diárias durante meses."],
+ ["vigilancia","La Asamblea abrió una fiscalización por denuncias de uso de Pegasus contra periodistas y activistas.","A Assembleia abriu uma fiscalização por denúncias de uso do Pegasus contra jornalistas e ativistas."],
+ ["vigilancia","Un decreto centralizó las cámaras municipales bajo un sistema con reconocimiento facial en tiempo real.","Um decreto centralizou as câmeras municipais em um sistema com reconhecimento facial em tempo real."],
+ ["vigilancia","El gobierno contrató a Palantir para cruzar datos de forma masiva desde la aduana.","O governo contratou a Palantir para cruzar dados de forma massiva a partir da alfândega."]
 ],
 "222":[
- ["normativa","La Ley de Ciberseguridad creó una agencia con facultades que podrían facilitar la eliminación de contenidos."],
- ["normativa","La Ley de Protección de Datos convive con objetivos de seguridad definidos de forma amplia e imprecisa."],
- ["censura","La Fiscalía preparó órdenes de captura contra periodistas tras una investigación sobre pactos con pandillas."],
- ["filtraciones","Se filtraron datos de casi un millón de personas afiliadas al sistema de seguro social."],
- ["filtraciones","Circularon 50 GB de instituciones educativas y 141 GB de empresas de gestión de cobros."],
- ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."]
+ ["normativa","La Ley de Ciberseguridad creó una agencia con facultades que podrían facilitar la eliminación de contenidos.","A Lei de Cibersegurança criou uma agência com atribuições que poderiam facilitar a remoção de conteúdos."],
+ ["normativa","La Ley de Protección de Datos convive con objetivos de seguridad definidos de forma amplia e imprecisa.","A Lei de Proteção de Dados convive com objetivos de segurança definidos de forma ampla e imprecisa."],
+ ["censura","La Fiscalía preparó órdenes de captura contra periodistas tras una investigación sobre pactos con pandillas.","A Procuradoria-Geral preparou mandados de prisão contra jornalistas após uma investigação sobre pactos com gangues."],
+ ["filtraciones","Se filtraron datos de casi un millón de personas afiliadas al sistema de seguro social.","Vazaram dados de quase um milhão de pessoas filiadas ao sistema de seguridade social."],
+ ["filtraciones","Circularon 50 GB de instituciones educativas y 141 GB de empresas de gestión de cobros.","Circularam 50 GB de instituições de ensino e 141 GB de empresas de cobrança."],
+ ["filtraciones",...BK]
 ],
 "320":[
- ["vigilancia","Fiscalías usaron el acceso físico a dispositivos para presentar el cifrado como indicio de criminalidad."]
+ ["vigilancia","Fiscalías usaron el acceso físico a dispositivos para presentar el cifrado como indicio de criminalidad.","Promotorias usaram o acesso físico a dispositivos para apresentar a criptografia como indício de criminalidade."]
 ],
 "340":[
- ["censura","Un medio fue investigado por injuria tras informar sobre tensiones internas en las Fuerzas Armadas."],
- ["filtraciones","Circulaban datos del censo electoral y millones de números telefónicos en sitios de venta ilegal."],
- ["ataques","Campañas de phishing suplantaron a donantes internacionales para mapear redes de organizaciones indígenas."],
- ["ataques","Una banda accedía a cuentas de WhatsApp mediante phishing para estafar a los contactos."],
- ["ataques","Estafadores ofrecían dólares a precios bajos y desviaban las transferencias a cuentas propias."]
+ ["censura","Un medio fue investigado por injuria tras informar sobre tensiones internas en las Fuerzas Armadas.","Um veículo de comunicação foi investigado por injúria após noticiar tensões internas nas Forças Armadas."],
+ ["filtraciones","Circulaban datos del censo electoral y millones de números telefónicos en sitios de venta ilegal.","Dados do cadastro eleitoral e milhões de números de telefone circulavam em sites de venda ilegal."],
+ ["ataques","Campañas de phishing suplantaron a donantes internacionales para mapear redes de organizaciones indígenas.","Campanhas de phishing se passaram por doadores internacionais para mapear redes de organizações indígenas."],
+ ["ataques","Una banda accedía a cuentas de WhatsApp mediante phishing para estafar a los contactos.","Uma quadrilha acessava contas de WhatsApp por meio de phishing para aplicar golpes nos contatos."],
+ ["ataques","Estafadores ofrecían dólares a precios bajos y desviaban las transferencias a cuentas propias.","Golpistas ofereciam dólares a preços baixos e desviavam as transferências para contas próprias."]
 ],
 "484":[
- ["normativa","Reformas a la Ley de Seguridad Nacional ampliaron de forma ambigua la noción de amenaza."],
- ["normativa","Reformas constitucionales eliminaron al INAI como órgano autónomo de transparencia."],
- ["filtraciones","Ataques a instituciones educativas públicas expusieron datos de miles de estudiantes."],
- ["filtraciones","Se comercializaron credenciales fiscales de al menos 111 mil contribuyentes, incluidas firmas electrónicas."],
- ["filtraciones","La plataforma de banca digital Bankingly expuso datos de clientes de cooperativas y microfinancieras."],
- ["desinformacion","Se viralizaron supuestas actas duplicadas en el conteo preliminar como prueba de fraude."],
- ["desinformacion","Caídas momentáneas del sitio del instituto electoral fueron presentadas como manipulación."],
- ["desinformacion","Se reutilizó un video de 2021 donde una persona vota armada, como si fuera de la elección de 2024."],
- ["ataques","El troyano bancario Infranus modifica el portapapeles para desviar transferencias."],
- ["ataques","Se reportaron más de mil aplicaciones de préstamos abusivos, varias activas en Google Play."],
- ["vgft","Casos de sextorsión en aplicaciones de citas, donde el agresor construye confianza antes de amenazar."],
- ["vgft","Se difundieron deepfakes sexuales de una senadora sin su consentimiento."],
- ["vgft","Se difundieron deepfakes sexuales de una streamer sin su consentimiento."],
- ["vigilancia","456 personas fueron atacadas con Pegasus en 2019, la cifra más alta a nivel global."],
- ["vigilancia","La Sedena adquirió el software HIWIRE para monitorear y crear cuentas falsas contra críticos del ejército."]
+ ["normativa","Reformas a la Ley de Seguridad Nacional ampliaron de forma ambigua la noción de amenaza.","Reformas à Lei de Segurança Nacional ampliaram de forma ambígua a noção de ameaça."],
+ ["normativa","Reformas constitucionales eliminaron al INAI como órgano autónomo de transparencia.","Reformas constitucionais extinguiram o INAI como órgão autônomo de transparência."],
+ ["filtraciones","Ataques a instituciones educativas públicas expusieron datos de miles de estudiantes.","Ataques a instituições de ensino públicas expuseram dados de milhares de estudantes."],
+ ["filtraciones","Se comercializaron credenciales fiscales de al menos 111 mil contribuyentes, incluidas firmas electrónicas.","Foram comercializadas credenciais fiscais de pelo menos 111 mil contribuintes, incluindo assinaturas eletrônicas."],
+ ["filtraciones",...BK],
+ ["desinformacion","Se viralizaron supuestas actas duplicadas en el conteo preliminar como prueba de fraude.","Supostas atas duplicadas na contagem preliminar viralizaram como prova de fraude."],
+ ["desinformacion","Caídas momentáneas del sitio del instituto electoral fueron presentadas como manipulación.","Quedas momentâneas do site do instituto eleitoral foram apresentadas como manipulação."],
+ ["desinformacion","Se reutilizó un video de 2021 donde una persona vota armada, como si fuera de la elección de 2024.","Um vídeo de 2021 em que uma pessoa vota armada foi reutilizado como se fosse da eleição de 2024."],
+ ["ataques","El troyano bancario Infranus modifica el portapapeles para desviar transferencias.","O trojan bancário Infranus altera a área de transferência para desviar transferências bancárias."],
+ ["ataques","Se reportaron más de mil aplicaciones de préstamos abusivos, varias activas en Google Play.","Foram denunciados mais de mil aplicativos de empréstimos abusivos, vários deles ativos no Google Play."],
+ ["vgft","Casos de sextorsión en aplicaciones de citas, donde el agresor construye confianza antes de amenazar.","Casos de sextorsão em aplicativos de namoro, nos quais o agressor conquista a confiança da vítima antes de ameaçá-la."],
+ ["vgft","Se difundieron deepfakes sexuales de una senadora sin su consentimiento.","Deepfakes sexuais de uma senadora foram divulgados sem seu consentimento."],
+ ["vgft","Se difundieron deepfakes sexuales de una streamer sin su consentimiento.","Deepfakes sexuais de uma streamer foram divulgados sem seu consentimento."],
+ ["vigilancia","456 personas fueron atacadas con Pegasus en 2019, la cifra más alta a nivel global.","456 pessoas foram atacadas com o Pegasus em 2019, o maior número do mundo."],
+ ["vigilancia","La Sedena adquirió el software HIWIRE para monitorear y crear cuentas falsas contra críticos del ejército.","A Sedena adquiriu o software HIWIRE para monitorar e criar contas falsas contra críticos do Exército."]
 ],
 "558":[
- ["normativa","La reforma a la Ley de Ciberdelitos amplió las conductas sancionables por difundir información en línea."],
- ["censura","El Estado bloqueó los dominios .ni de cinco medios independientes sin notificación previa."],
- ["vigilancia","Una base militar en Managua opera un sistema capaz de interceptar llamadas, correos y transacciones bancarias."],
- ["vigilancia","Persecución transnacional de personas exiliadas en Costa Rica mediante doxxing y monitoreo de redes."]
+ ["normativa","La reforma a la Ley de Ciberdelitos amplió las conductas sancionables por difundir información en línea.","A reforma da Lei de Crimes Cibernéticos ampliou as condutas puníveis por divulgar informações on-line."],
+ ["censura","El Estado bloqueó los dominios .ni de cinco medios independientes sin notificación previa.","O Estado bloqueou os domínios .ni de cinco veículos de comunicação independentes sem notificação prévia."],
+ ["vigilancia","Una base militar en Managua opera un sistema capaz de interceptar llamadas, correos y transacciones bancarias.","Uma base militar em Manágua opera um sistema capaz de interceptar ligações, e-mails e transações bancárias."],
+ ["vigilancia","Persecución transnacional de personas exiliadas en Costa Rica mediante doxxing y monitoreo de redes.","Perseguição transnacional de pessoas exiladas na Costa Rica por meio de doxxing e monitoramento de redes sociais."]
 ],
 "591":[
- ["cortes","El gobierno suspendió internet y telefonía en Bocas del Toro durante casi dos semanas. Un precedente inédito."]
+ ["cortes","El gobierno suspendió internet y telefonía en Bocas del Toro durante casi dos semanas. Un precedente inédito.","O governo suspendeu a internet e a telefonia em Bocas del Toro durante quase duas semanas. Um precedente inédito."]
 ],
 "600":[
- ["normativa","Una ley impuso vigilancia biométrica obligatoria mediante reconocimiento facial en estadios."],
- ["filtraciones","Una filtración del tribunal electoral involucró datos de más de 7 millones de personas."],
- ["filtraciones","Otra filtración expuso salarios y afiliación política de personas funcionarias de entidades públicas."],
- ["ataques","Un ransomware dejó fuera de servicio todos los portales del Ministerio de Educación."],
- ["vigilancia","Al menos 13 instituciones públicas instalaron cámaras biométricas sin marco legal ni estudios de impacto."],
- ["vigilancia","El ciberpatrullaje fue incorporado a la ley de reforma de la Policía Nacional."]
+ ["normativa","Una ley impuso vigilancia biométrica obligatoria mediante reconocimiento facial en estadios.","Uma lei impôs vigilância biométrica obrigatória por meio de reconhecimento facial nos estádios."],
+ ["filtraciones","Una filtración del tribunal electoral involucró datos de más de 7 millones de personas.","Um vazamento do tribunal eleitoral envolveu dados de mais de 7 milhões de pessoas."],
+ ["filtraciones","Otra filtración expuso salarios y afiliación política de personas funcionarias de entidades públicas.","Outro vazamento expôs salários e filiação partidária de servidores de órgãos públicos."],
+ ["ataques","Un ransomware dejó fuera de servicio todos los portales del Ministerio de Educación.","Um ransomware deixou fora do ar todos os portais do Ministério da Educação."],
+ ["vigilancia","Al menos 13 instituciones públicas instalaron cámaras biométricas sin marco legal ni estudios de impacto.","Pelo menos 13 instituições públicas instalaram câmeras biométricas sem marco legal nem estudos de impacto."],
+ ["vigilancia","El ciberpatrullaje fue incorporado a la ley de reforma de la Policía Nacional.","O ciberpatrulhamento foi incorporado à lei de reforma da Polícia Nacional."]
 ],
 "604":[
- ["filtraciones","La filtración de datos de clientes de un banco se originó en un proveedor externo de monitoreo."],
- ["filtraciones","Imágenes y datos del registro de identidad fueron expuestos mediante accesos del Ministerio del Interior."],
- ["ataques","La autoridad bancaria alertó sobre al menos 17 aplicaciones de préstamos con esquemas de extorsión."],
- ["biometricos","World desplegó dispositivos de escaneo de iris a cambio de criptomonedas."],
- ["biometricos","La autoridad de protección de datos investigó la legalidad del modelo de escaneo de iris."]
+ ["filtraciones","La filtración de datos de clientes de un banco se originó en un proveedor externo de monitoreo.","O vazamento de dados de clientes de um banco teve origem em um fornecedor externo de monitoramento."],
+ ["filtraciones","Imágenes y datos del registro de identidad fueron expuestos mediante accesos del Ministerio del Interior.","Imagens e dados do registro de identidade foram expostos por meio de acessos do Ministério do Interior."],
+ ["ataques","La autoridad bancaria alertó sobre al menos 17 aplicaciones de préstamos con esquemas de extorsión.","A autoridade bancária alertou sobre pelo menos 17 aplicativos de empréstimo com esquemas de extorsão."],
+ ["biometricos",...WD],
+ ["biometricos","La autoridad de protección de datos investigó la legalidad del modelo de escaneo de iris.","A autoridade de proteção de dados investigou a legalidade do modelo de escaneamento de íris."]
 ],
 "858":[
- ["filtraciones","Se expusieron casi 15 mil solicitudes de visa, en su mayoría de personas migrantes y refugiadas."],
- ["filtraciones","Una base de atención ciudadana con más de 574 mil registros quedó expuesta."],
- ["filtraciones","Se filtraron más de 13 mil credenciales de acceso a sistemas del Estado."],
- ["ataques","Un ransomware cifró la información de un gobierno departamental y exigió 650 mil dólares."],
- ["vigilancia","La policía admitió monitorear redes sociales. Un adolescente fue detenido por error."]
+ ["filtraciones","Se expusieron casi 15 mil solicitudes de visa, en su mayoría de personas migrantes y refugiadas.","Foram expostos quase 15 mil pedidos de visto, em sua maioria de pessoas migrantes e refugiadas."],
+ ["filtraciones","Una base de atención ciudadana con más de 574 mil registros quedó expuesta.","Uma base de atendimento ao cidadão com mais de 574 mil registros ficou exposta."],
+ ["filtraciones","Se filtraron más de 13 mil credenciales de acceso a sistemas del Estado.","Vazaram mais de 13 mil credenciais de acesso a sistemas do Estado."],
+ ["ataques","Un ransomware cifró la información de un gobierno departamental y exigió 650 mil dólares.","Um ransomware criptografou as informações de um governo departamental e exigiu 650 mil dólares."],
+ ["vigilancia","La policía admitió monitorear redes sociales. Un adolescente fue detenido por error.","A polícia admitiu monitorar redes sociais. Um adolescente foi detido por engano."]
 ],
 "862":[
- ["normativa","Un decreto creó el Consejo Nacional de Ciberseguridad con facultades extensas de cibervigilancia."],
- ["censura","Tras las elecciones de 2024, una ola de bloqueos afectó a Signal, X, TikTok, Telegram y YouTube."],
- ["censura","Se bloquearon sitios de proveedores de VPN para impedir que la ciudadanía eludiera las restricciones."],
- ["censura","La operadora estatal bloqueó más de 30 servidores DNS públicos, incluidos los de Google."],
- ["censura","Un ataque de denegación de servicio dejó inaccesible el sitio de un diario por cuatro horas."],
- ["filtraciones","Se ofrecieron bases con millones de registros personales, con muestras para verificar su autenticidad."],
- ["desinformacion","Perfiles de TikTok con estética de noticiero difundieron como hechos versiones no verificadas."],
- ["desinformacion","Circularon capturas falsas donde una dirigenta opositora felicitaba un intento de golpe en Bolivia."],
- ["desinformacion","Deepfakes de voz y audios fabricados con IA se atribuyeron a figuras de la oposición."],
- ["desinformacion","Redes de cuentas que se citan entre sí simularon ser oposición para amplificar narrativas."],
- ["cortes","Una caída afectó solo a las dos operadoras estatales, cuatro días después de las elecciones."],
- ["cortes","Un colapso eléctrico dejó sin internet a 8 de cada 10 personas durante casi 21 horas."],
- ["vigilancia","Una campaña de phishing recopiló datos personales de simpatizantes de la oposición."],
- ["vigilancia","Se usaron drones para capturar los rostros de asistentes a manifestaciones."],
- ["vigilancia","En operativos policiales se exigía desbloquear teléfonos para revisar conversaciones de WhatsApp."],
- ["vigilancia","Una app estatal de servicios públicos fue reconvertida para denunciar manifestantes con foto y ubicación."]
+ ["normativa","Un decreto creó el Consejo Nacional de Ciberseguridad con facultades extensas de cibervigilancia.","Um decreto criou o Conselho Nacional de Cibersegurança com amplas atribuições de cibervigilância."],
+ ["censura","Tras las elecciones de 2024, una ola de bloqueos afectó a Signal, X, TikTok, Telegram y YouTube.","Após as eleições de 2024, uma onda de bloqueios afetou Signal, X, TikTok, Telegram e YouTube."],
+ ["censura","Se bloquearon sitios de proveedores de VPN para impedir que la ciudadanía eludiera las restricciones.","Sites de provedores de VPN foram bloqueados para impedir que a população contornasse as restrições."],
+ ["censura","La operadora estatal bloqueó más de 30 servidores DNS públicos, incluidos los de Google.","A operadora estatal bloqueou mais de 30 servidores DNS públicos, incluindo os do Google."],
+ ["censura","Un ataque de denegación de servicio dejó inaccesible el sitio de un diario por cuatro horas.","Um ataque de negação de serviço deixou o site de um jornal inacessível por quatro horas."],
+ ["filtraciones","Se ofrecieron bases con millones de registros personales, con muestras para verificar su autenticidad.","Foram oferecidas bases com milhões de registros pessoais, com amostras para comprovar sua autenticidade."],
+ ["desinformacion","Perfiles de TikTok con estética de noticiero difundieron como hechos versiones no verificadas.","Perfis no TikTok com estética de telejornal divulgaram versões não verificadas como se fossem fatos."],
+ ["desinformacion","Circularon capturas falsas donde una dirigenta opositora felicitaba un intento de golpe en Bolivia.","Circularam capturas de tela falsas em que uma dirigente da oposição parabenizava uma tentativa de golpe na Bolívia."],
+ ["desinformacion","Deepfakes de voz y audios fabricados con IA se atribuyeron a figuras de la oposición.","Deepfakes de voz e áudios fabricados com IA foram atribuídos a figuras da oposição."],
+ ["desinformacion","Redes de cuentas que se citan entre sí simularon ser oposición para amplificar narrativas.","Redes de contas que se citam entre si fingiram ser da oposição para amplificar narrativas."],
+ ["cortes","Una caída afectó solo a las dos operadoras estatales, cuatro días después de las elecciones.","Uma queda afetou apenas as duas operadoras estatais, quatro dias após as eleições."],
+ ["cortes","Un colapso eléctrico dejó sin internet a 8 de cada 10 personas durante casi 21 horas.","Um colapso elétrico deixou 8 em cada 10 pessoas sem internet durante quase 21 horas."],
+ ["vigilancia","Una campaña de phishing recopiló datos personales de simpatizantes de la oposición.","Uma campanha de phishing coletou dados pessoais de simpatizantes da oposição."],
+ ["vigilancia","Se usaron drones para capturar los rostros de asistentes a manifestaciones.","Drones foram usados para capturar os rostos de participantes de manifestações."],
+ ["vigilancia","En operativos policiales se exigía desbloquear teléfonos para revisar conversaciones de WhatsApp.","Em operações policiais, exigia-se o desbloqueio de celulares para revisar conversas de WhatsApp."],
+ ["vigilancia","Una app estatal de servicios públicos fue reconvertida para denunciar manifestantes con foto y ubicación.","Um app estatal de serviços públicos foi reconvertido para denunciar manifestantes com foto e localização."]
 ]
+};
+const txt=o=>o[lang==="pt"?2:1];
+
+const DEF={
+ es:{normativa:"Leyes, decretos y proyectos que configuran el marco legal para la vigilancia estatal, la censura y el acceso a la información, habilitando otros incidentes documentados en este informe.",censura:"Mecanismos estatales y privados que restringen plataformas, medios y expresiones en línea mediante interferencia técnica y persecución judicial.",filtraciones:"Exposición o acceso indebido a información personal o confidencial almacenada por entidades públicas o privadas.",desinformacion:"Circulación de contenidos falsos o engañosos que busca influir en el voto, favorecer o perjudicar candidaturas y erosionar la confianza en el proceso electoral.",ataques:"Acciones deliberadas contra infraestructuras o servicios digitales específicos, con el fin de obtener acceso, interrumpir servicios, extorsionar o cometer fraude.",vgft:"Actos de violencia por razón de género cometidos, facilitados, agravados o amplificados mediante tecnologías digitales, con daños físicos, sexuales, psicológicos, sociales, políticos o económicos.",biometricos:"Recolección de datos biométricos, como el iris, por parte de empresas que obtienen un beneficio económico o estratégico, en condiciones que ponen en duda la validez del consentimiento.",cortes:"Interrupción total o parcial de la conectividad en una zona determinada, por órdenes estatales, fallas en servicios o infraestructura deteriorada.",vigilancia:"Monitoreo, interceptación, recolección y análisis de datos realizados por actores estatales o privados con fines de control o neutralización de personas consideradas de interés."},
+ pt:{normativa:"Leis, decretos e projetos que configuram o marco legal para a vigilância estatal, a censura e o acesso à informação, viabilizando outros incidentes documentados neste relatório.",censura:"Mecanismos estatais e privados que restringem plataformas, meios de comunicação e expressões on-line por meio de interferência técnica e perseguição judicial.",filtraciones:"Exposição ou acesso indevido a informações pessoais ou confidenciais armazenadas por entidades públicas ou privadas.",desinformacion:"Circulação de conteúdos falsos ou enganosos que busca influenciar o voto, favorecer ou prejudicar candidaturas e minar a confiança no processo eleitoral.",ataques:"Ações deliberadas contra infraestruturas ou serviços digitais específicos, com o objetivo de obter acesso, interromper serviços, extorquir ou cometer fraude.",vgft:"Atos de violência baseada em gênero cometidos, facilitados, agravados ou amplificados por meio de tecnologias digitais, com danos físicos, sexuais, psicológicos, sociais, políticos ou econômicos.",biometricos:"Coleta de dados biométricos, como a íris, por empresas que obtêm um benefício econômico ou estratégico, em condições que colocam em dúvida a validade do consentimento.",cortes:"Interrupção total ou parcial da conectividade em uma área determinada, por ordens estatais, falhas nos serviços ou infraestrutura deteriorada.",vigilancia:"Monitoramento, interceptação, coleta e análise de dados realizados por atores estatais ou privados com fins de controle ou neutralização de pessoas consideradas de interesse."}
 };
 
 // Territorios dibujados como contexto geográfico, fuera del alcance del informe
 const INERT=new Set(["084","332","388","630","780","044","052","308","662","212","028","670","531","533","328","740"]);
 const OUT="#F0F0F0";
 const REGION=Object.keys(N);
-const WHY="La presencia de incidentes documentados puede responder a factores como la capacidad de monitoreo de las organizaciones locales, una cobertura mediática desigual entre países o la decisión de no difundir casos para proteger a las personas afectadas.";
 function toggleWhy(b){
   const open=b.getAttribute("aria-expanded")==="true";
   b.setAttribute("aria-expanded",String(!open));
   b.parentElement.nextElementSibling.hidden=open;
 }
 function whyBlock(){
-  return ' <button class="why" aria-expanded="false" onclick="toggleWhy(this)">¿Por qué? <span class="car">▸</span></button></p>'
-       + '<p class="whytxt" hidden>'+WHY+'</p>';
+  return ' <button class="why" aria-expanded="false" onclick="toggleWhy(this)">'+t("why")+' <span class="car">▸</span></button></p>'
+       + '<p class="whytxt" hidden>'+t("whyText")+'</p>';
 }
-let f="all", sel=null;
+let f="all", sel=null, mapReady=false;
 const svg=d3.select("#map"), tip=document.getElementById("tip");
 const pad = id => String(id).padStart(3,"0");
 
@@ -477,20 +602,19 @@ function fill(id){
 }
 function count(){}
 function legend(){
-  let h2='<span class="lg"><i style="background:'+MARK+'"></i>Con incidentes documentados</span>';
-  h2+='<span class="lg"><i style="background:'+OUT+'"></i>Fuera del alcance del informe</span>';
+  let h2='<span class="lg"><i style="background:'+MARK+'"></i>'+t("withInc")+'</span>';
+  h2+='<span class="lg"><i style="background:'+OUT+'"></i>'+t("outScope")+'</span>';
   document.getElementById("legend").innerHTML=h2;
 }
-const DEF={normativa:"Leyes, decretos y proyectos que configuran el marco legal para la vigilancia estatal, la censura y el acceso a la información, habilitando otros incidentes documentados en este informe.",censura:"Mecanismos estatales y privados que restringen plataformas, medios y expresiones en línea mediante interferencia técnica y persecución judicial.",filtraciones:"Exposición o acceso indebido a información personal o confidencial almacenada por entidades públicas o privadas.",desinformacion:"Circulación de contenidos falsos o engañosos que busca influir en el voto, favorecer o perjudicar candidaturas y erosionar la confianza en el proceso electoral.",ataques:"Acciones deliberadas contra infraestructuras o servicios digitales específicos, con el fin de obtener acceso, interrumpir servicios, extorsionar o cometer fraude.",vgft:"Actos de violencia por razón de género cometidos, facilitados, agravados o amplificados mediante tecnologías digitales, con daños físicos, sexuales, psicológicos, sociales, políticos o económicos.",biometricos:"Recolección de datos biométricos, como el iris, por parte de empresas que obtienen un beneficio económico o estratégico, en condiciones que ponen en duda la validez del consentimiento.",cortes:"Interrupción total o parcial de la conectividad en una zona determinada, por órdenes estatales, fallas en servicios o infraestructura deteriorada.",vigilancia:"Monitoreo, interceptación, recolección y análisis de datos realizados por actores estatales o privados con fines de control o neutralización de personas consideradas de interés."};
 function renderHome(){
   sel=null;
-  document.getElementById("pt").textContent="Tipos de incidente";
-  document.getElementById("pk").textContent="Qué documenta este informe";
+  document.getElementById("pt").textContent=t("typesTitle");
+  document.getElementById("pk").textContent=t("typesKicker");
   const rows=Object.keys(T).map(k=>
-    '<div class="grow"><span class="gname"><i style="background:'+T[k].c+'"></i>'+T[k].l+'</span>'
-    +'<p class="gdef">'+DEF[k]+'</p></div>').join("");
+    '<div class="grow"><span class="gname"><i style="background:'+T[k].c+'"></i>'+tl(k)+'</span>'
+    +'<p class="gdef">'+DEF[lang][k]+'</p></div>').join("");
   document.getElementById("pb").innerHTML=
-    '<p class="pnote pnote-top">Haz clic en un país del mapa para explorar sus casos.</p>'
+    '<p class="pnote pnote-top">'+t("clickHint")+'</p>'
     + '<div class="plist">'+rows+'</div>';
   document.getElementById("clear").classList.remove("on");
   paint();
@@ -499,33 +623,27 @@ function setFilter(k){ f="all"; reset(); }
 function reset(){ renderHome(); }
 function panel(id){
   const pk=document.getElementById("pk"), pt=document.getElementById("pt"), pb=document.getElementById("pb");
-  const name=N[id]||"País";
-  pt.textContent=name;
+  pt.textContent=nm(id);
   document.getElementById("clear").classList.add("on");
   const d=D[id];
   if(!d){
-    pk.textContent="Sin registro en este informe";
-    pb.innerHTML='<div class="note"><p><strong>Este informe no documenta incidentes en '+name+'</strong>, lo que no significa que no hayan ocurrido.'+whyBlock()+'</div>';
+    pk.textContent=t("noRecord");
+    pb.innerHTML='<div class="note"><p><strong>'+UI[lang].noInc(id)+'</strong>'+t("notMean")+whyBlock()+'</div>';
     return;
   }
   const items = f==="all" ? d : d.filter(o=>o[0]===f);
-  if(f==="all"){
-    pk.textContent=items.length+(items.length===1?" incidente documentado":" incidentes documentados");
-  }else{
-    pk.textContent=items.length+(items.length===1?" incidente de ":" incidentes de ")+T[f].l.toLowerCase();
-  }
+  pk.textContent = f==="all" ? UI[lang].countAll(items.length) : UI[lang].countCat(items.length,f);
   if(!items.length){
-    const que = f==="normativa" ? "desarrollos normativos" : "casos de "+T[f].l.toLowerCase();
-    pb.innerHTML='<div class="note"><p><strong>Este informe no documenta '+que+' en '+name+'</strong>, lo que no significa que no hayan ocurrido.'+whyBlock()+'<button class="seeall" onclick="setFilter(\'all\')">Ver todos los incidentes de '+name+'</button></div>';
+    pb.innerHTML='<div class="note"><p><strong>'+UI[lang].noCat(id,f)+'</strong>'+t("notMean")+whyBlock()+'<button class="seeall" onclick="setFilter(\'all\')">'+UI[lang].seeAll(id)+'</button></div>';
     return;
   }
   // con filtro activo la categoría ya está en el encabezado: no se repite en cada tarjeta
   pb.innerHTML=items.map(o=>{
-    const tag = f==="all" ? '<span class="tag" style="color:'+T[o[0]].c+'">'+T[o[0]].l+'</span>' : '';
-    return '<div class="rec"><div class="bar" style="background:'+T[o[0]].c+'"></div><div>'+tag+'<p>'+o[1]+'</p></div></div>';
+    const tag = f==="all" ? '<span class="tag" style="color:'+T[o[0]].c+'">'+tl(o[0])+'</span>' : '';
+    return '<div class="rec"><div class="bar" style="background:'+T[o[0]].c+'"></div><div>'+tag+'<p>'+txt(o)+'</p></div></div>';
   }).join("");
   if(f!=="all" && d.length>items.length){
-    pb.innerHTML += '<div style="margin-top:6px"><button class="seeall" onclick="setFilter(\'all\')">Ver todos los incidentes de '+name+'</button></div>';
+    pb.innerHTML += '<div style="margin-top:6px"><button class="seeall" onclick="setFilter(\'all\')">'+UI[lang].seeAll(id)+'</button></div>';
   }
 }
 function paint(){
@@ -541,10 +659,32 @@ function paint(){
 }
 function status(){
   const now=document.getElementById("now"), cf=document.getElementById("clearf");
-  now.innerHTML='<i style="background:'+MARK+'"></i>'+(sel ? (N[sel]||"") : "Países con incidentes documentados");
+  now.innerHTML='<i style="background:'+MARK+'"></i>'+(sel ? nm(sel) : t("countriesWith"));
   cf.classList.toggle("on", !!sel);
-  cf.textContent="✕ Ver toda la región";
+  cf.textContent=t("clearRegion");
 }
+
+/* ---------- cambio de idioma ---------- */
+function applyLang(){
+  document.documentElement.lang = lang==="pt" ? "pt-BR" : "es";
+  document.title=t("docTitle");
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent=t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-html]").forEach(el=>{ el.innerHTML=t(el.dataset.i18nHtml); });
+  document.querySelectorAll("#ml, .cta .btn").forEach(a=>{ a.href=t("reportUrl"); });
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===lang)));
+  svg.selectAll(".country").attr("aria-label",d=>INERT.has(pad(d.id))?null:nm(pad(d.id)));
+  if(mapReady){ if(sel){ paint(); panel(sel); } else renderHome(); }
+  else status();
+}
+function setLang(l){
+  if(l===lang) return;
+  lang=l;
+  try{ localStorage.setItem("elm2-lang",l); }catch(e){}
+  try{ const u=new URL(location.href); u.searchParams.set("lang",l); history.replaceState(null,"",u); }catch(e){}
+  applyLang();
+}
+document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+
 document.getElementById("clear").addEventListener("click",reset);
 document.getElementById("clearf").addEventListener("click",()=>{ f="all";
   document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.f==="all")));
@@ -557,6 +697,8 @@ dbtn.addEventListener("click",()=>{
   dbtn.setAttribute("aria-expanded",String(!open));
   dpan.classList.toggle("open",!open);
 });
+
+applyLang();
 
 d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json").then(w=>{
   const l=document.getElementById("loading"); if(l) l.remove();
@@ -588,7 +730,7 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json").then(w=
     .attr("class","country").attr("d",path)
     .attr("tabindex",d=>INERT.has(pad(d.id))?null:0)
     .attr("role",d=>INERT.has(pad(d.id))?null:"button")
-    .attr("aria-label",d=>INERT.has(pad(d.id))?null:(N[pad(d.id)]||"País"))
+    .attr("aria-label",d=>INERT.has(pad(d.id))?null:nm(pad(d.id)))
     .on("click",(e,d)=>{
       const id=pad(d.id);
       if(sel===id){ reset(); return; }
@@ -596,11 +738,11 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json").then(w=
     })
     .on("keydown",(e,d)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();const id=pad(d.id);if(sel===id){reset();}else{sel=id;paint();panel(sel);}}})
     .on("mousemove",(e,d)=>{
-      const id=pad(d.id), dd=D[id], nm=N[id]||"País";
-      if(!dd) tip.innerHTML=nm;
+      const id=pad(d.id), dd=D[id], n=nm(id);
+      if(!dd) tip.innerHTML=n;
       else{
         const it=f==="all"?dd:dd.filter(o=>o[0]===f);
-        tip.innerHTML = it.length ? nm+"<span>"+it.length+"</span>" : nm;
+        tip.innerHTML = it.length ? n+"<span>"+it.length+"</span>" : n;
       }
       tip.classList.add("on");
       tip.style.left=(e.clientX+14)+"px"; tip.style.top=(e.clientY-10)+"px";
@@ -610,9 +752,10 @@ d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json").then(w=
   document.querySelectorAll(".chip[data-f]").forEach(c=>{
     c.style.color = c.dataset.f==="all" ? MARK : T[c.dataset.f].c;
   });
+  mapReady=true;
   renderHome();
 }).catch(err=>{
-  const l=document.getElementById("loading"); if(l) l.textContent="No se pudo cargar el mapa.";
+  const l=document.getElementById("loading"); if(l) l.textContent=t("loadErr");
   console.error(err);
 });
 
